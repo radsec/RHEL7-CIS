@@ -699,6 +699,7 @@
   yum:
       name: "*"
       state: latest
+  when: rhel7cis_yum_update
   tags:
       - level1
       - level2

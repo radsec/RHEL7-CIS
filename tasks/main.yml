@@ -11,42 +11,42 @@
 
 - name: Check ansible version
   fail:
-      msg: You must use ansible 2.1 or greater
-  when: not ansible_version.full | version_compare('2.1', '>=')
+      msg: You must use ansible 2.2 or greater
+  when: not ansible_version.full | version_compare('2.2', '>=')
   tags:
       - always
 
-- include: prelim.yml
+- import_tasks: prelim.yml
   become: yes
   tags:
       - prelim_tasks
       - always
 
-- include: section1.yml
+- import_tasks: section1.yml
   become: yes
   when: rhel7cis_section1
 
-- include: section2.yml
+- import_tasks: section2.yml
   become: yes
   when: rhel7cis_section2
 
-- include: section3.yml
+- import_tasks: section3.yml
   become: yes
   when: rhel7cis_section3
 
-- include: section4.yml
+- import_tasks: section4.yml
   become: yes
   when: rhel7cis_section4
 
-- include: section5.yml
+- import_tasks: section5.yml
   become: yes
   when: rhel7cis_section5
 
-- include: section6.yml
+- import_tasks: section6.yml
   become: yes
   when: rhel7cis_section6
 
-- include: post.yml
+- import_tasks: post.yml
   become: yes
   tags:
       - post_tasks

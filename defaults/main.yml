@@ -54,6 +54,8 @@ rhel7cis_rhnsd_required: false
 rhel7cis_bootloader_password: random
 rhel7cis_set_boot_pass: false
 
+rhel7cis_yum_update: false
+
 # System network parameters (host only OR host and router)
 rhel7cis_is_router: false
 
