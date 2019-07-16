@@ -156,32 +156,21 @@
       - patch
       - rule_1.1.7
 
-- name: "SCORED | 1.1.8 | PATCH | Ensure nodev option set on /var/tmp partition"
-  command: /bin/true
-  changed_when: no
+- name: "SCORED | 1.1.8 | PATCH | Ensure nodev option set on /var/tmp partition\n
+         SCORED | 1.1.9 | PATCH | Ensure nosuid option set on /var/tmp partition\n
+         SCORED | 1.1.10 | PATCH | Ensure noexec option set on /var/tmp partition"
+  mount:
+    path: /var/tmp
+    opts: "rw,nosuid,nodev,noexec,relatime"
+    state: mounted
   tags:
-      - level1
-      - scored
-      - patch
-      - rule_1.1.8
-
-- name: "SCORED | 1.1.9 | PATCH | Ensure nosuid option set on /var/tmp partition"
-  command: /bin/true
-  changed_when: no
-  tags:
-      - level1
-      - scored
-      - patch
-      - rule_1.1.9
-
-- name: "SCORED | 1.1.10 | PATCH | Ensure noexec option set on /var/tmp partition"
-  command: /bin/true
-  changed_when: no
-  tags:
-      - level1
-      - scored
-      - patch
-      - rule_1.1.10
+    - level1
+    - scored
+    - patch
+    - rule_1.1.8
+    - rule_1.1.9
+    - rule_1.1.10
+    - low
 
 - name: "SCORED | 1.1.11 | PATCH | Ensure separate partition exists for /var/log"
   shell: mount | grep "on /var/log "
@@ -217,8 +206,10 @@
       - rule_1.1.13
 
 - name: "SCORED | 1.1.14 | PATCH | Ensure nodev option set on /home partition"
-  command: /bin/true
-  changed_when: no
+  mount:
+    path: /home
+    opts: nodev
+    state: mounted
   tags:
       - level1
       - level2
@@ -279,10 +270,12 @@
       - rule_1.1.21
 
 - name: "SCORED | 1.1.22 | PATCH | Disable Automounting"
-  service:
+  systemd:
       name: autofs
       enabled: no
-  when: rhel7cis_allow_autofs == false and autofs_service_status.stdout == "loaded"
+  when:
+    - not rhel7cis_allow_autofs
+    - autofs_service_status.stdout == "loaded"
   tags:
       - level1
       - patch
@@ -357,7 +350,10 @@
       name: rhnsd
       state: stopped
       enabled: no
-  when: ansible_distribution == "RedHat" and rhnsd_service_status and not rhel7cis_rhnsd_required
+  when:
+    - ansible_distribution == "RedHat"
+    - rhnsd_service_status
+    - not rhel7cis_rhnsd_required
   tags:
       - level2
       - notscored
@@ -699,7 +695,7 @@
   yum:
       name: "*"
       state: latest
-  when: rhel7cis_yum_update
+  when: rhel7cis_update
   tags:
       - level1
       - level2

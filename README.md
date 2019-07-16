@@ -1,4 +1,4 @@
-# RHEL7-CIS - v2.2.0 - Latest
+# RHEL7-CIS - v2.2.0.1 - Latest
 
 ## RHEL 7 - CIS Benchmark Hardening Script
 
@@ -10,12 +10,49 @@ This role will make significant changes to systems and could break the running o
 
 ## System Requirements
 ```
-Ansible 2.2
-RHEL 7
+Ansible 2.5+
+RHEL 7.x+
 ```
 ## Role and Setting Variables
 ```
-Work in progress
+section1
+section2
+section3
+section4
+section5
+section6
 ```
 ## License
-MIT
+MIT License
+
+Copyright for portions of RHEL7-CIS are held by
+
+Copyright (c) 2015 MindPoint Group http://www.mindpointgroup.com
+
+as part of RHEL7-CIS.
+
+All other copyright for project RHEL7-CIS are held by 
+
+Copyright (c) 2018-2019 Radsec
+
+AND
+
+Copyright (c) 2018-2019 Coalfire
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
