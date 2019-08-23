@@ -13,7 +13,12 @@ This role will make significant changes to systems and could break the running o
 Ansible 2.5+
 RHEL 7.x+
 ```
-## Role and Setting Variables
+## Role
+```
+role: RHEL7-CIS
+tags: level1 or level2
+```
+## Section Vars
 ```
 section1
 section2
@@ -21,6 +26,10 @@ section3
 section4
 section5
 section6
+```
+## Vars
+```
+Refer to defaults/main.yml for other vars
 ```
 ## License
 MIT License
