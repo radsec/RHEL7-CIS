@@ -1,0 +1,12 @@
+---
+- hosts:  all
+  become: yes
+  become_method: sudo
+  gather_facts: true
+  roles:
+    - role: CIS_rhel7_Benchmark
+  tags:
+    - always
+    - prelim_tasks
+    - level1
+    - post_tasks

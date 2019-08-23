@@ -1,0 +1,14 @@
+---
+- hosts:  all
+  become: yes
+  become_method: sudo
+  gather_facts: true
+  roles:
+# Match role folder name here - RHEL7-CIS
+    - role: RHEL7-CIS
+  tags:
+    - always
+    - prelim_tasks
+    - level1
+    - level2
+    - post_tasks
