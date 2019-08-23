@@ -16,7 +16,15 @@ RHEL 7.x+
 ## Role
 ```
 role: RHEL7-CIS
-tags: level1 or level2
+```
+## Role/Playbook Tags
+```
+tags: 
+level1
+level2
+always
+prelim_tasks
+post_tasks
 ```
 ## Section Vars
 ```
@@ -30,6 +38,10 @@ section6
 ## Vars
 ```
 Refer to defaults/main.yml for other vars
+```
+## Sample Playbook.ymls
+```
+Refer to RHEL7-CIS_Benchmark_(level1, level1_and_level2, or level2).ymls for sample playbook.ymls. Change the role to match role folder name.
 ```
 ## License
 MIT License
