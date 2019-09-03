@@ -210,16 +210,20 @@
       - level1
       - scored
       - patch
+      - rhel7cis_disable_service_checks is defined and rhel7cis_disable_service_checks 
       - rule_2.1.6
 
 - name: "SCORED | 2.1.6 | PATCH | Ensure tftp server is not enabled"
   command: chkconfig tftp off
   notify: restart xinetd
-  when: tftp_service.stat.exists and rhel7cis_tftp_server == false
+  when:
+    - rhel7cis_disable_service_checks is defined and rhel7cis_disable_service_checks
+    - tftp_service.stat.exists and rhel7cis_tftp_server == false
   tags:
       - level1
       - scored
       - patch
+      - rhel7cis_disable_service_checks is defined and rhel7cis_disable_service_checks 
       - rule_2.1.6
 
 - name: "SCORED | 2.1.7 | PATCH | Ensure xinetd is not enabled"
@@ -228,10 +232,12 @@
       state: stopped
       enabled: no
   when: 
+      - rhel7cis_disable_service_checks is defined and rhel7cis_disable_service_checks
       - xinetd_service_status.stdout == "loaded" and not rhel7cis_xinetd_required
   tags:
       - level1
       - patch
+      - rhel7cis_disable_service_checks is defined and rhel7cis_disable_service_checks 
       - scored
       - rule_2.1.7
 
@@ -249,6 +255,8 @@
       name: "{{ rhel7cis_time_synchronization }}d"
       state: started
       enabled: yes
+  when:
+    - rhel7cis_time_synchronization is defined
   tags:
       - level1
       - patch
@@ -259,7 +267,9 @@
       name: ntpd
       state: stopped
       enabled: no
-  when: rhel7cis_time_synchronization == "chrony" and ntpd_service_status.stdout == "loaded"
+  when: 
+    - rhel7cis_time_synchronization is defined
+    - rhel7cis_time_synchronization == "chrony" and ntpd_service_status.stdout == "loaded"
   tags:
       - level1
       - patch
@@ -271,7 +281,9 @@
       state: stopped
       enabled: no
   ignore_errors: yes
-  when: rhel7cis_time_synchronization == "ntp" and chronyd_service_status.stdout == "loaded"
+  when:
+    - rhel7cis_time_synchronization is defined
+    - rhel7cis_time_synchronization == "ntp" and chronyd_service_status.stdout == "loaded"
   tags:
       - level1
       - patch
@@ -284,7 +296,9 @@
       owner: root
       group: root
       mode: 0644
-  when: rhel7cis_time_synchronization == "ntp"
+  when:
+    - rhel7cis_time_synchronization is defined
+    - rhel7cis_time_synchronization == "ntp"
   tags:
       - level1
       - patch
@@ -295,7 +309,9 @@
       dest: /etc/sysconfig/ntpd
       regexp: "^(#)?OPTIONS"
       line: "OPTIONS=\"-u ntp:ntp\""
-  when: rhel7cis_time_synchronization == "ntp"
+  when:
+    - rhel7cis_time_synchronization is defined
+    - rhel7cis_time_synchronization == "ntp"
   tags:
       - level1
       - patch
@@ -306,7 +322,9 @@
       dest: /usr/lib/systemd/system/ntpd.service
       regexp: "^(#)?ExecStart"
       line: "ExecStart=/usr/sbin/ntpd -u ntp:ntp $OPTIONS"
-  when: rhel7cis_time_synchronization == "ntp"
+  when:
+    - rhel7cis_time_synchronization is defined
+    - rhel7cis_time_synchronization == "ntp"
   tags:
       - level1
       - patch
@@ -319,7 +337,9 @@
       owner: root
       group: root
       mode: 0644
-  when: rhel7cis_time_synchronization == "chrony"
+  when:
+    - rhel7cis_time_synchronization is defined
+    - rhel7cis_time_synchronization == "chrony"
   tags:
       - level1
       - patch
@@ -332,7 +352,9 @@
       line: "OPTIONS=\"-u chrony\""
       state: present
       create: yes
-  when: rhel7cis_time_synchronization == "chrony"
+  when:
+    - rhel7cis_time_synchronization is defined
+    - rhel7cis_time_synchronization == "chrony"
   tags:
       - level1
       - patch
