@@ -218,7 +218,8 @@
       dest: /etc/ssh/sshd_config
       regexp: '^PermitRootLogin'
       line: 'PermitRootLogin no'
-  when: rhel7cis_permit_ssh_root_login_disabled
+  when:
+    - rhel7cis_permit_ssh_root_login_disabled is defined and rhel7cis_permit_ssh_root_login_disabled
   tags:
       - level1
       - level2
@@ -330,7 +331,8 @@
       - { key: 'ucredit', value: '-1' }
       - { key: 'ocredit', value: '-1' }
       - { key: 'lcredit', value: '-1' }
-  when: rhel7cis_password_creation_requirements
+  when:
+    - rhel7cis_password_creation_requirements is defined and rhel7cis_password_creation_requirements 
   tags:
       - level1
       - level2
@@ -519,7 +521,8 @@
       dest: /etc/login.defs
       regexp: '^PASS_MAX_DAYS'
       line: 'PASS_MAX_DAYS 90'
-  when: rhel7cis_password_expiration
+  when: 
+    - rhel7cis_password_expiration is defined and rhel7cis_password_expiration
   tags:
       - level1
       - level2
@@ -532,7 +535,8 @@
       dest: /etc/login.defs
       regexp: '^PASS_MIN_DAYS'
       line: 'PASS_MIN_DAYS 7'
-  when: rhel7cis_password_minimum_days_password_change
+  when:
+    - rhel7cis_password_minimum_days_password_change is defined and rhel7cis_password_minimum_days_password_change
   tags:
       - level1
       - level2
@@ -575,7 +579,8 @@
     owner: root
     group: root
     mode: 0700
-  when: rhel7cis_ensure_system_accounts_are_non_login
+  when:
+    - rhel7cis_ensure_system_accounts_are_non_login is defined and rhel7cis_ensure_system_accounts_are_non_login
   tags:
     - level1
     - patch
@@ -586,7 +591,8 @@
   shell: /opt/five_four_two.sh
   args:
     executable: /bin/bash
-  when: rhel7cis_ensure_system_accounts_are_non_login
+  when:
+    - rhel7cis_ensure_system_accounts_are_non_login is defined and rhel7cis_ensure_system_accounts_are_non_login
   tags:
     - level1
     - patch
@@ -600,7 +606,8 @@
     owner: root
     group: root
     state: absent
-  when: rhel7cis_ensure_system_accounts_are_non_login
+  when:
+    - rhel7cis_ensure_system_accounts_are_non_login is defined and rhel7cis_ensure_system_accounts_are_non_login
   tags:
     - level1
     - patch
@@ -614,13 +621,15 @@
       - level2
       - patch
       - rule_5.4.3
+
 - name: "SCORED | 5.4.4 | PATCH | Ensure default user umask is 027 or more restrictive"
   lineinfile:
     state: present
     dest: /etc/bashrc
     regexp: 'umask'
     line: 'umask {{ rhel7cis_default_user_umask }}'
-  when: rhel7cis_modify_default_user_umask
+  when:
+    - rhel7cis_modify_default_user_umask is defined and rhel7cis_modify_default_user_umask
   tags:
     - level1
     - patch
@@ -633,12 +642,13 @@
       dest: /etc/profile
       regexp: 'umask'
       line: 'umask {{ rhel7cis_default_user_umask }}'
-  when: rhel7cis_modify_default_user_umask
+  when:
+    - rhel7cis_modify_default_user_umask is defined and rhel7cis_modify_default_user_umask
   tags:
-      - level1
-      - patch
-      - rule_5.4.4
-      - low
+    - level1
+    - patch
+    - rule_5.4.4
+    - low
 
 - name: "SCORED | 5.4.4 | PATCH | Ensure default user umask is 027 or more restrictive"
   find:
@@ -646,7 +656,8 @@
     recurse: yes
     patterns: "*.sh"
   register: profiled_dir
-  when: rhel7cis_modify_default_user_umask
+  when:
+    - rhel7cis_modify_default_user_umask is defined and rhel7cis_modify_default_user_umask
   tags:
     - level1
     - patch
@@ -662,13 +673,13 @@
     backup: yes
   with_items: profiled_dir.files.path
   ignore_errors: yes
-  when: rhel7cis_modify_default_user_umask
+  when:
+    - rhel7cis_modify_default_user_umask is defined and rhel7cis_modify_default_user_umask
   tags:
     - level1
     - patch
     - rule_5.4.4
     - low
-
 
 - name: "SCORED | 5.4.5 | PATCH | Ensure default user shell timeout is 900 seconds or less"
   lineinfile:
@@ -697,10 +708,10 @@
 - name: "NOTSCORED | 5.5 | PATCH | Ensure root login is restricted to system console"
   command: /bin/true
   tags:
-      - level1
-      - level2
-      - patch
-      - rule_5.5
+    - level1
+    - level2
+    - patch
+    - rule_5.5
 
 - name: "SCORED | 5.6 | PATCH | Ensure access to the su command is restricted"
   lineinfile:

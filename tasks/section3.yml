@@ -252,7 +252,9 @@
       dest: /etc/hosts.deny
       regexp: "^(#)?ALL"
       line: "ALL: ALL"
-  when: rhel7cis_enable_hosts_deny
+  when:
+    - rhel7cis_enable_host_deny is defined
+    - rhel7cis_enable_hosts_deny
   tags:
       - level1
       - patch
@@ -328,7 +330,9 @@
   yum:
       name: firewalld
       state: present
-  when: rhel7cis_firewall == "firewalld"
+  when:
+    - rhel7cis_firewall is defined
+    - rhel7cis_firewall == "firewalld"
   tags:
       - level1
       - patch
@@ -339,7 +343,9 @@
       name: firewalld
       state: stopped
       enabled: no
-  when: rhel7cis_firewall == "firewalld"
+  when:
+    - rhel7cis_firewall is defined
+    - rhel7cis_firewall == "firewalld"
   tags:
       - level1
       - patch
@@ -349,7 +355,9 @@
   yum:
       name: iptables
       state: present
-  when: rhel7cis_firewall == "iptables"
+  when:
+    - rhel7cis_firewall is defined
+    - rhel7cis_firewall == "iptables"
   tags:
       - level1
       - patch
@@ -363,8 +371,9 @@
     action: append
     state: present
   when:
+    - rhel7cis_firewall is defined
     - rhel7cis_firewall == "iptables"
-    - rhel7cis_firewall_default_deny_rule
+    - rhel7cis_firewall_default_deny_rule is defined and rhel7cis_firewall_default_deny_rule
   tags:
     - level1
     - patch
@@ -379,8 +388,9 @@
     action: append
     state: present
   when:
+    - rhel7cis_firewall is defined
     - rhel7cis_firewall == "iptables"
-    - rhel7cis_firewall_default_deny_rule
+    - rhel7cis_firewall_default_deny_rule is defined and rhel7cis_firewall_default_deny_rule
   tags:
     - level1
     - patch
@@ -395,8 +405,9 @@
     action: append
     state: present
   when:
+    - rhel7cis_firewall is defined
     - rhel7cis_firewall == "iptables"
-    - rhel7cis_firewall_default_deny_rule
+    - rhel7cis_firewall_default_deny_rule is defined and rhel7cis_firewall_default_deny_rule
   tags:
     - level1
     - patch
@@ -412,8 +423,9 @@
     action: append
     state: present
   when:
+    - rhel7cis_firewall is defined
     - rhel7cis_firewall == "iptables"
-    - rhel7cis_firewall_loopback_rule
+    - rhel7cis_firewall_loopback_rule is defined and rhel7cis_firewall_loopback_rule
   tags:
     - level1
     - patch
@@ -429,8 +441,9 @@
     action: append
     state: present
   when:
+    - rhel7cis_firewall is defined
     - rhel7cis_firewall == "iptables"
-    - rhel7cis_firewall_loopback_rule
+    - rhel7cis_firewall_loopback_rule is defined and rhel7cis_firewall_loopback_rule
   tags:
     - level1
     - patch
@@ -446,8 +459,9 @@
     action: append
     state: present
   when:
+    - rhel7cis_firewall is defined
     - rhel7cis_firewall == "iptables"
-    - rhel7cis_firewall_loopback_rule
+    - rhel7cis_firewall_loopback_rule is defined and rhel7cis_firewall_loopback_rule
   tags:
     - level1
     - patch
@@ -463,8 +477,9 @@
     ctstate: NEW,ESTABLISHED
     jump: ACCEPT
   when:
+    - rhel7cis_firewall is defined
     - rhel7cis_firewall == "iptables"
-    - rhel7cis_firewall_outbound_rule
+    - rhel7cis_firewall_outbound_rule is defined and rhel7cis_firewall_outbound_rule
   tags:
     - level1
     - patch
@@ -480,8 +495,9 @@
     ctstate: NEW,ESTABLISHED
     jump: ACCEPT
   when:
+    - rhel7cis_firewall is defined
     - rhel7cis_firewall == "iptables"
-    - rhel7cis_firewall_outbound_rule
+    - rhel7cis_firewall_outbound_rule is defined and rhel7cis_firewall_outbound_rule
   tags:
     - level1
     - patch
@@ -497,8 +513,9 @@
     ctstate: NEW,ESTABLISHED
     jump: ACCEPT
   when:
+    - rhel7cis_firewall is defined
     - rhel7cis_firewall == "iptables"
-    - rhel7cis_firewall_outbound_rule
+    - rhel7cis_firewall_outbound_rule is defined and rhel7cis_firewall_outbound_rule
   tags:
     - level1
     - patch
@@ -514,8 +531,9 @@
     ctstate: ESTABLISHED
     jump: ACCEPT
   when:
+    - rhel7cis_firewall is defined
     - rhel7cis_firewall == "iptables"
-    - rhel7cis_firewall_outbound_rule
+    - rhel7cis_firewall_outbound_rule is defined and rhel7cis_firewall_outbound_rule
   tags:
     - level1
     - patch
@@ -531,8 +549,9 @@
     ctstate: ESTABLISHED
     jump: ACCEPT
   when:
+    - rhel7cis_firewall is defined
     - rhel7cis_firewall == "iptables"
-    - rhel7cis_firewall_outbound_rule
+    - rhel7cis_firewall_outbound_rule is defined and rhel7cis_firewall_outbound_rule
   tags:
     - level1
     - patch
@@ -548,8 +567,9 @@
     ctstate: ESTABLISHED
     jump: ACCEPT
   when:
+    - rhel7cis_firewall is defined
     - rhel7cis_firewall == "iptables"
-    - rhel7cis_firewall_outbound_rule
+    - rhel7cis_firewall_outbound_rule is defined and rhel7cis_firewall_outbound_rule
   tags:
     - level1
     - patch
@@ -559,7 +579,9 @@
 - name: "SCORED | 3.6.5 | PATCH | Ensure firewall rules exist for all open ports"
   debug:
     msg: "Ensure firewall rules exist for all open ports"
-  when: rhel7cis_firewall == "iptables"
+  when: 
+    - rhel7cis_firewall is defined
+    - rhel7cis_firewall == "iptables"
   tags:
     - level1
     - patch
