@@ -59,10 +59,13 @@ rhel7cis_warning_banner: |
 # Section 1.8 | Ensure updates of software repos and system packages are up-to-date | Run yum update
 rhel7cis_update: false
 
-
 ############################
 ### Section 2 Parameters ###
 ############################
+# Set this to false to prevent disabling of services.
+# Value of true will disable all services not excluded or skipped using the var booleans below.
+# The disable_service_checks can also be enabled via the skip tag function by skipping "disable_service_checks" tag to the running playbook
+rhel7cis_disable_service_checks: true
 
 # Service configuration booleans set true to keep service
 rhel7cis_cups_server: false
