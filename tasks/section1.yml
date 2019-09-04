@@ -162,7 +162,12 @@
   mount:
     path: /var/tmp
     opts: "rw,nosuid,nodev,noexec,relatime"
+    fstype: "tmpfs"
+    src: tmpfs
     state: mounted
+  when:
+    - var_tmp_mounted is defined
+    - var_tmp_mounted.rc|float == 0
   tags:
     - level1
     - scored
@@ -210,6 +215,11 @@
     path: /home
     opts: nodev
     state: mounted
+    fstype: "ext4"
+    src: home
+  when:
+    - home_mounted is defined
+    - home_mounted.rc|float == 0
   tags:
       - level1
       - level2
@@ -220,18 +230,18 @@
          SCORED | 1.1.16 | PATCH | Ensure nosuid option set on /dev/shm partition\n
          SCORED | 1.1.17 | PATCH | Ensure noexec option set on /dev/shm partition"
   mount:
-      name: /dev/shm
-      src: tmpfs
-      state: mounted
-      fstype: tmpfs
-      opts: "defaults,nodev,nosuid,noexec"
+    name: /dev/shm
+    src: tmpfs
+    state: mounted
+    fstype: tmpfs
+    opts: "defaults,nodev,nosuid,noexec"
   tags:
-      - level1
-      - scored
-      - patch
-      - rule_1.1.15
-      - rule_1.1.16
-      - rule_1.1.17
+    - level1
+    - scored
+    - patch
+    - rule_1.1.15
+    - rule_1.1.16
+    - rule_1.1.17
 
 - name: "NOTSCORED | 1.1.18 | PATCH | Ensure nodev option set on removable media partitions"
   command: /bin/true
