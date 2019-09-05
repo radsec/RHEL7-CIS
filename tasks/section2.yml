@@ -787,6 +787,7 @@
       name: openldap-clients
       state: absent
   when: 
+    - rhel7cis_ad_ldap_joined_machine is defined and not rhel7cis_ad_ldap_joined_machine
     - (not rhel7cis_openldap_clients_required)
     - rhel7cis_disable_service_checks is defined and rhel7cis_disable_service_checks
   tags:
