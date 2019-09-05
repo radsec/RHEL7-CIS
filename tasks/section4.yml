@@ -63,6 +63,7 @@
 
 - name: "SCORED | 4.1.4 | PATCH | Ensure events that modify date and time information are collected"
   command: /bin/true
+  changed_when: no
   tags:
       - level2
       - auditd
@@ -71,6 +72,7 @@
 
 - name: "SCORED | 4.1.5 | PATCH | Ensure events that modify user/group information are collected"
   command: /bin/true
+  changed_when: no
   tags:
       - level2
       - auditd
@@ -79,6 +81,7 @@
 
 - name: "SCORED | 4.1.6 | PATCH | Ensure events that modify the system's network environment are collected"
   command: /bin/true
+  changed_when: no
   tags:
       - level2
       - auditd
@@ -87,6 +90,7 @@
 
 - name: "SCORED | 4.1.7 | PATCH | Ensure events that modify the system's Mandatory Access Controls are collected"
   command: /bin/true
+  changed_when: no
   tags:
       - level2
       - auditd
@@ -95,6 +99,7 @@
 
 - name: "SCORED | 4.1.8 | PATCH | Ensure login and logout events are collected"
   command: /bin/true
+  changed_when: no
   tags:
       - level2
       - auditd
@@ -103,6 +108,7 @@
 
 - name: "SCORED | 4.1.9 | PATCH | Ensure session initiation information is collected"
   command: /bin/true
+  changed_when: no
   tags:
       - level2
       - auditd
@@ -111,6 +117,7 @@
 
 - name: "SCORED | 4.1.10 | PATCH | Ensure discretionary access control permission modification events are collected"
   command: /bin/true
+  changed_when: no
   tags:
       - level2
       - auditd
@@ -119,6 +126,7 @@
 
 - name: "SCORED | 4.1.11 | PATCH | Ensure unsuccessful unauthorized file access attempts are collected"
   command: /bin/true
+  changed_when: no
   tags:
       - level2
       - auditd
@@ -127,6 +135,7 @@
 
 - name: "SCORED | 4.1.12 | PATCH | Ensure use of privileged commands is collected"
   command: /bin/true
+  changed_when: no
   tags:
       - level2
       - auditd
@@ -168,6 +177,7 @@
 
 - name: "SCORED | 4.1.14 | PATCH | Ensure file deletion events by users are collected"
   command: /bin/true
+  changed_when: no
   tags:
       - level2
       - auditd
@@ -209,6 +219,7 @@
 
 - name: "SCORED | 4.1.16 | PATCH | Ensure system administrator actions (sudolog) are collected"
   command: /bin/true
+  changed_when: no
   tags:
       - level2
       - auditd
@@ -217,6 +228,7 @@
 
 - name: "SCORED | 4.1.17 | PATCH | Ensure kernel module loading and unloading is collected"
   command: /bin/true
+  changed_when: no
   tags:
       - level2
       - auditd
@@ -225,6 +237,7 @@
 
 - name: "SCORED | 4.1.18 | PATCH | Ensure the audit configuration is immutable"
   command: /bin/true
+  changed_when: no
   tags:
       - level2
       - auditd
@@ -245,6 +258,7 @@
 
 - name: "NOTSCORED | 4.2.1.2 | PATCH | Ensure logging is configured"
   command: /bin/true
+  changed_when: no
   when: 
     - rhel7cis_rsyslog is defined and rhel7cis_log_server is defined
     - rhel7cis_rsyslog
@@ -361,6 +375,7 @@
 
 - name: "NOTSCORED | 4.2.2.2 | PATCH | Ensure logging is configured"
   command: /bin/true
+  changed_when: no
   when: 
     - rhel7cis_rsyslog is defined and rhel7cis_log_server is defined
     - rhel7cis_rsyslog
@@ -389,6 +404,7 @@
 
 - name: "NOTSCORED | 4.2.2.4 | PATCH | Ensure syslog-ng is configured to send logs to a remote log host"
   command: /bin/true
+  changed_when: no
   when: 
     - rhel7cis_syslog_ng is defined and rhel7cis_log_server is defined
     - rhel7cis_syslog_ng
@@ -401,6 +417,7 @@
 
 - name: "NOTSCORED | 4.2.2.5 | PATCH | Ensure remote syslog-ng messages are only accepted on designated log hosts"
   command: /bin/true
+  changed_when: no
   when: 
     - rhel7cis_syslog_ng is defined and rhel7cis_log_server is defined
     - rhel7cis_syslog_ng

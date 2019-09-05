@@ -1,5 +1,6 @@
 - name: "NOTSCORED | 6.1.1 | PATCH | Audit system file permissions"
   command: /bin/true
+  changed_when: no
   tags:
     - level2
     - patch
@@ -111,6 +112,7 @@
 
 - name: "SCORED | 6.1.10 | PATCH | Ensure no world writable files exist"
   command: /bin/true
+  changed_when: no
   tags:
     - level1
     - level2
@@ -119,6 +121,7 @@
 
 - name: "SCORED | 6.1.11 | PATCH | Ensure no unowned files or directories exist"
   command: /bin/true
+  changed_when: no
   tags:
     - level1
     - level2
@@ -127,6 +130,7 @@
 
 - name: "SCORED | 6.1.12 | PATCH | Ensure no ungrouped files or directories exist"
   command: /bin/true
+  changed_when: no
   tags:
     - level1
     - level2
@@ -135,6 +139,7 @@
 
 - name: "NOTSCORED | 6.1.13 | PATCH | Audit SUID executables"
   command: /bin/true
+  changed_when: no
   tags:
     - level1
     - level2
@@ -143,6 +148,7 @@
 
 - name: "NOTSCORED | 6.1.14 | PATCH | Audit SGID executables"
   command: /bin/true
+  changed_when: no
   tags:
     - level1
     - level2
@@ -152,7 +158,9 @@
 - name: "SCORED | 6.2.1 | PATCH | Ensure password fields are not empty"
   command: passwd -l {{ item }}
   with_items: "{{ empty_password_accounts.stdout_lines }}"
-  when: empty_password_accounts.rc
+  when:
+    - empty_password_accounts is defined
+    - empty_password_accounts.rc
   tags:
     - level1
     - level2
@@ -189,7 +197,9 @@
 - name: "SCORED | 6.2.5 | PATCH | Ensure root is the only UID 0 account"
   command: passwd -l {{ item }}
   with_items: "{{ uid_zero_accounts_except_root.stdout_lines }}"
-  when: uid_zero_accounts_except_root.rc
+  when:
+    - uid_zero_accounts_except is defined
+    - uid_zero_accounts_except_root.rc
   tags:
     - level1
     - level2
@@ -224,7 +234,9 @@
 - name: "SCORED | 6.2.6 | PATCH | Ensure root PATH Integrity"
   debug:
     var: root_path_integrity.stdout_lines
-  when: root_path_integrity.stdout != ""
+  when:
+    - root_path_integrity is defined
+    - root_path_integrity.stdout != ""
   tags:
     - rule_6.2.6
     - low
@@ -234,7 +246,9 @@
 - name: "SCORED | 6.2.6 | PATCH | Ensure root PATH Integrity"
   debug:
     msg: "PASS | 6.2.6 | root PATH integrity"
-  when: root_path_integrity.stdout == ""
+  when:
+    - root_path_integrity is defined
+    - root_path_integrity.stdout == ""
   tags:
     - rule_6.2.6
     - low
@@ -247,6 +261,7 @@
     owner: root
     group: root
     state: absent
+  changed_when: no
   tags:
     - rule_6.2.6
     - low
@@ -280,7 +295,9 @@
 - name: "SCORED | 6.2.7 | PATCH | Ensure all users' home directories exist"
   debug:
     var: home_directories_exist.stdout_lines
-  when: home_directories_exist.stdout != ""
+  when:
+    - home_directories_exist is defined
+    - home_directories_exist.stdout != ""
   tags:
     - rule_6.2.7
     - low
@@ -290,7 +307,9 @@
 - name: "SCORED | 6.2.7 | PATCH | Ensure all users' home directories exist"
   debug:
     msg: "PASS | 6.2.7 | All users' home directories exist."
-  when: home_directories_exist.stdout == ""
+  when:
+    - home_directories_exist is defined
+    - home_directories_exist.stdout == ""
   tags:
     - rule_6.2.7
     - low
@@ -303,6 +322,7 @@
     owner: root
     group: root
     state: absent
+  changed_when: no
   tags:
     - rule_6.2.7
     - low
@@ -316,7 +336,10 @@
     owner: root
     group: root
     mode: 0700
-  when: rhel7cis_modify_user_homes
+  changed_when: no
+  when: 
+    - rhel7cis_modify_user_homes is defined
+    - rhel7cis_modify_user_homes
   tags:
     - rule_6.2.8
     - level1
@@ -328,7 +351,9 @@
   args:
     executable: /bin/bash
   register: home_directories_permissions
-  when: rhel7cis_modify_user_homes
+  when:
+    - rhel7cis_modify_user_homes is defined
+    - rhel7cis_modify_user_homes
   tags:
     - rule_6.2.8
     - level1
@@ -338,7 +363,9 @@
 - name: "SCORED | 6.2.8 | PATCH | Ensure users' home directories permissions are 750 or more restrictive"
   debug:
     var: home_directories_permissions.stdout_lines
-  when: rhel7cis_modify_user_homes
+  when:
+    - rhel7cis_modify_user_homes is defined and home_directories_permissions is defined
+    - rhel7cis_modify_user_homes
   tags:
     - rule_6.2.8
     - level1
@@ -349,6 +376,7 @@
   debug:
     msg: "PASS | 6.2.8 | Users' home directories permissions are 750 or more restrictive."
   when:
+    - rhel7cis_modify_user_homes is defined and home_directories_permissions is defined
     - home_directories_permissions.stdout == ""
     - rhel7cis_modify_user_homes
   tags:
@@ -363,7 +391,10 @@
     owner: root
     group: root
     state: absent
-  when: rhel7cis_modify_user_homes
+  changed_when: no
+  when:
+    - rhel7cis_modify_user_homes is defined
+    - rhel7cis_modify_user_homes
   tags:
     - rule_6.2.8
     - level1
@@ -377,6 +408,7 @@
     owner: root
     group: root
     mode: 0700
+  changed_when: no
   tags:
     - rule_6.2.9
     - level1
@@ -418,6 +450,7 @@
     owner: root
     group: root
     state: absent
+  changed_when: no
   tags:
     - rule_6.2.9
     - level1
@@ -431,6 +464,7 @@
     owner: root
     group: root
     mode: 0700
+  changed_when: no
   tags:
     - rule_6.2.10
     - patch
@@ -460,7 +494,9 @@
 - name: "SCORED | 6.2.10 | PATCH | Ensure users' dot files are not group or world writable"
   debug:
     msg: "PASS | 6.2.10 | Users' dot files are not group or world writable."
-  when: user_dot_files.stdout == ""
+  when:
+    - user_dot_files is defined
+    - user_dot_files.stdout == ""
   tags:
     - rule_6.2.10
     - level1
@@ -473,6 +509,7 @@
     owner: root
     group: root
     state: absent
+  changed_when: no
   tags:
     - rule_6.2.10
     - patch
@@ -481,8 +518,8 @@
 
 - name: "SCORED | 6.2.11 | PATCH | Ensure no users have .forward files"
   file:
-      state: absent
-      dest: "~{{ item }}/.forward"
+    state: absent
+    dest: "~{{ item }}/.forward"
   with_items: "{{ users.stdout_lines }}"
   tags:
     - rule_6.2.11
@@ -492,8 +529,8 @@
 
 - name: "SCORED | 6.2.12 | PATCH | Ensure no users have .netrc files"
   file:
-      state: absent
-      dest: "~{{ item }}/.netrc"
+    state: absent
+    dest: "~{{ item }}/.netrc"
   with_items: "{{ users.stdout_lines }}"
   tags:
     - rule_6.2.12
@@ -508,6 +545,7 @@
     owner: root
     group: root
     mode: 0700
+  changed_when: no
   tags:
     - rule_6.2.13
     - patch
@@ -537,7 +575,9 @@
 - name: "SCORED | 6.2.13 | PATCH | Ensure users' .netrc files are not group or world accessible"
   debug:
     msg: "PASS | 6.2.13 | Users' .netrc files are not group or world accessible."
-  when: dot_netrc_files.stdout == ""
+  when:
+    - dot_netrc_files is defined
+    - dot_netrc_files.stdout == ""
   tags:
     - rule_6.2.13
     - patch
@@ -550,6 +590,7 @@
     owner: root
     group: root
     state: absent
+  changed_when: no
   tags:
     - rule_6.2.13
     - patch
@@ -574,6 +615,7 @@
     owner: root
     group: root
     mode: 0700
+  changed_when: no
   tags:
     - rule_6.2.15
     - patch
@@ -616,6 +658,7 @@
     owner: root
     group: root
     state: absent
+  changed_when: no
   tags:
     - rule_6.2.15
     - patch
@@ -629,6 +672,7 @@
     owner: root
     group: root
     mode: 0700
+  changed_when: no
   tags:
     - rule_6.2.16
     - patch
@@ -658,7 +702,9 @@
 - name: "SCORED | 6.2.16 | PATCH | Ensure no duplicate UIDs exist"
   debug:
     msg: "PASS | 6.2.16 | No duplicate UIDs exist."
-  when: duplicate_uids.stdout == ""
+  when:
+    - duplicate_uids is defined
+    - duplicate_uids.stdout == ""
   tags:
     - rule_6.2.16
     - patch
@@ -671,6 +717,7 @@
     owner: root
     group: root
     state: absent
+  changed_when: no
   tags:
     - rule_6.2.16
     - patch
@@ -684,6 +731,7 @@
     owner: root
     group: root
     mode: 0700
+  changed_when: no
   tags:
     - rule_6.2.17
     - patch
@@ -713,7 +761,9 @@
 - name: "SCORED | 6.2.17 | PATCH | Ensure no duplicate GIDs exist"
   debug:
     msg: "PASS | 6.2.17 | No duplicate GIDs exist."
-  when: duplicate_gids.stdout == ""
+  when:
+    - duplicate_gids is defined
+    - duplicate_gids.stdout == ""
   tags:
     - rule_6.2.17
     - patch
@@ -726,6 +776,7 @@
     owner: root
     group: root
     state: absent
+  changed_when: no
   tags:
     - rule_6.2.17
     - patch
@@ -739,6 +790,7 @@
     owner: root
     group: root
     mode: 0700
+  changed_when: no
   tags:
     - rule_6.2.18
     - patch
@@ -768,7 +820,9 @@
 - name: "SCORED | 6.2.18 | PATCH | Ensure no duplicate user names exist"
   debug:
     msg: "PASS | 6.2.18 | No duplicate user names exist"
-  when: duplicate_users.stdout == ""
+  when:
+    - duplicate_users is defined
+    - duplicate_users.stdout == ""
   tags:
     - rule_6.2.18
     - patch
@@ -781,6 +835,7 @@
     owner: root
     group: root
     state: absent
+  changed_when: no
   tags:
     - rule_6.2.18
     - patch
@@ -794,6 +849,7 @@
     owner: root
     group: root
     mode: 0700
+  changed_when: no
   tags:
     - rule_6.2.19
     - patch
@@ -823,7 +879,9 @@
 - name: "SCORED | 6.2.19 | PATCH | Ensure no duplicate group names exist"
   debug:
     msg: "PASS | 6.2.19 | No duplicate group names exist"
-  when: duplicate_groups.stdout == ""
+  when:
+    - duplicate_groups is defined
+    - duplicate_groups.stdout == ""
   tags:
     - rule_6.2.19
     - patch
@@ -836,6 +894,7 @@
     owner: root
     group: root
     state: absent
+  changed_when: no
   tags:
     - rule_6.2.19
     - patch

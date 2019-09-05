@@ -158,13 +158,13 @@
 
 - name: "SCORED | 2.1.4 | PATCH | Ensure echo services are not enabled | echo-stream"
   stat:
-      path: /etc/xinetd.d/echo-stream
+    path: /etc/xinetd.d/echo-stream
   register: echo_stream_service
   tags:
-      - level1
-      - scored
-      - patch
-      - rule_2.1.4
+    - level1
+    - scored
+    - patch
+    - rule_2.1.4
 
 - name: "SCORED | 2.1.4 | PATCH | Ensure echo services are not enabled | echo-stream"
   command: chkconfig echo-stream off
@@ -173,20 +173,20 @@
     - echo_stream_service is defined
     - echo_stream_service.stat.exists
   tags:
-      - level1
-      - scored
-      - patch
-      - rule_2.1.4
+    - level1
+    - scored
+    - patch
+    - rule_2.1.4
 
 - name: "SCORED | 2.1.5 | PATCH | Ensure time services are not enabled | time-dgram"
   stat:
-      path: /etc/xinetd.d/time-dgram
+    path: /etc/xinetd.d/time-dgram
   register: time_dgram_service
   tags:
-      - level1
-      - scored
-      - patch
-      - rule_2.1.5
+    - level1
+    - scored
+    - patch
+    - rule_2.1.5
 
 - name: "SCORED | 2.1.5 | PATCH | Ensure time services are not enabled | time-dgram"
   command: chkconfig time-dgram off
@@ -195,20 +195,20 @@
     - time_dgram_service is defined
     - time_dgram_service.stat.exists
   tags:
-      - level1
-      - scored
-      - patch
-      - rule_2.1.5
+    - level1
+    - scored
+    - patch
+    - rule_2.1.5
 
 - name: "SCORED | 2.1.5 | PATCH | Ensure time services are not enabled | time-stream"
   stat:
-      path: /etc/xinetd.d/time-stream
+    path: /etc/xinetd.d/time-stream
   register: time_stream_service
   tags:
-      - level1
-      - scored
-      - patch
-      - rule_2.1.5
+    - level1
+    - scored
+    - patch
+    - rule_2.1.5
 
 - name: "SCORED | 2.1.5 | PATCH | Ensure time services are not enabled | time-stream"
   command: chkconfig time-stream off
@@ -217,21 +217,21 @@
     - time_stream_service is defined
     - time_stream_service.stat.exists
   tags:
-      - level1
-      - scored
-      - patch
-      - rule_2.1.5
+    - level1
+    - scored
+    - patch
+    - rule_2.1.5
 
 - name: "SCORED | 2.1.6 | PATCH | Ensure tftp server is not enabled"
   stat:
-      path: /etc/xinetd.d/tftp
+    path: /etc/xinetd.d/tftp
   register: tftp_service
   tags:
-      - level1
-      - scored
-      - patch
-      - rhel7cis_disable_service_checks is defined and rhel7cis_disable_service_checks 
-      - rule_2.1.6
+    - level1
+    - scored
+    - patch
+    - rhel7cis_disable_service_checks is defined and rhel7cis_disable_service_checks 
+    - rule_2.1.6
 
 - name: "SCORED | 2.1.6 | PATCH | Ensure tftp server is not enabled"
   command: chkconfig tftp off
@@ -240,102 +240,102 @@
     - rhel7cis_disable_service_checks is defined and rhel7cis_disable_service_checks
     - tftp_service.stat.exists and rhel7cis_tftp_server == false
   tags:
-      - level1
-      - scored
-      - patch
-      - rhel7cis_disable_service_checks is defined and rhel7cis_disable_service_checks 
-      - rule_2.1.6
+    - level1
+    - scored
+    - patch
+    - rhel7cis_disable_service_checks is defined and rhel7cis_disable_service_checks 
+    - rule_2.1.6
 
 - name: "SCORED | 2.1.7 | PATCH | Ensure xinetd is not enabled"
   service:
-      name: xinetd
-      state: stopped
-      enabled: no
+    name: xinetd
+    state: stopped
+    enabled: no
   when: 
-      - rhel7cis_disable_service_checks is defined and rhel7cis_disable_service_checks
-      - xinetd_service_status.stdout == "loaded" and not rhel7cis_xinetd_required
+    - rhel7cis_disable_service_checks is defined and rhel7cis_disable_service_checks
+    - xinetd_service_status.stdout == "loaded" and not rhel7cis_xinetd_required
   tags:
-      - level1
-      - patch
-      - rhel7cis_disable_service_checks is defined and rhel7cis_disable_service_checks 
-      - scored
-      - rule_2.1.7
+    - level1
+    - patch
+    - rhel7cis_disable_service_checks is defined and rhel7cis_disable_service_checks 
+    - scored
+    - rule_2.1.7
 
 - name: "NOTSCORED | 2.2.1.1 | PATCH | Ensure time synchronization is in use - service install"
   yum:
-      name: "{{ rhel7cis_time_synchronization }}"
-      state: present
+    name: "{{ rhel7cis_time_synchronization }}"
+    state: present
   tags:
-      - level1
-      - patch
-      - rule_2.2.1.1
+    - level1
+    - patch
+    - rule_2.2.1.1
 
 - name: "NOTSCORED | 2.2.1.1 | PATCH | Ensure time synchronization is in use - service start"
   service:
-      name: "{{ rhel7cis_time_synchronization }}d"
-      state: started
-      enabled: yes
+    name: "{{ rhel7cis_time_synchronization }}d"
+    state: started
+    enabled: yes
   when:
     - rhel7cis_time_synchronization is defined
   tags:
-      - level1
-      - patch
-      - rule_2.2.1.1
+    - level1
+    - patch
+    - rule_2.2.1.1
 
 - name: "NOTSCORED | 2.2.1.1 | PATCH | Ensure time synchronization is in use - service stop ntp"
   service:
-      name: ntpd
-      state: stopped
-      enabled: no
+    name: ntpd
+    state: stopped
+    enabled: no
   when: 
     - rhel7cis_time_synchronization is defined
     - rhel7cis_time_synchronization == "chrony" and ntpd_service_status.stdout == "loaded"
   tags:
-      - level1
-      - patch
-      - rule_2.2.1.1
+    - level1
+    - patch
+    - rule_2.2.1.1
 
 - name: "NOTSCORED | 2.2.1.1 | PATCH | Ensure time synchronization is in use - service stop chrony"
   service:
-      name: chronyd
-      state: stopped
-      enabled: no
+    name: chronyd
+    state: stopped
+    enabled: no
   ignore_errors: yes
   when:
     - rhel7cis_time_synchronization is defined
     - rhel7cis_time_synchronization == "ntp" and chronyd_service_status.stdout == "loaded"
   tags:
-      - level1
-      - patch
-      - rule_2.2.1.1
+    - level1
+    - patch
+    - rule_2.2.1.1
 
 - name: "SCORED | 2.2.1.2 | PATCH | Ensure ntp is configured | modify /etc/ntp.conf"
   template:
-      src: ntp.conf.j2
-      dest: /etc/ntp.conf
-      owner: root
-      group: root
-      mode: 0644
+    src: ntp.conf.j2
+    dest: /etc/ntp.conf
+    owner: root
+    group: root
+    mode: 0644
   when:
     - rhel7cis_time_synchronization is defined
     - rhel7cis_time_synchronization == "ntp"
   tags:
-      - level1
-      - patch
-      - rule_2.2.1.2
+    - level1
+    - patch
+    - rule_2.2.1.2
 
 - name: "SCORED | 2.2.1.2 | PATCH | Ensure ntp is configured | modify /etc/sysconfig/ntpd"
   lineinfile:
-      dest: /etc/sysconfig/ntpd
-      regexp: "^(#)?OPTIONS"
-      line: "OPTIONS=\"-u ntp:ntp\""
+    dest: /etc/sysconfig/ntpd
+    regexp: "^(#)?OPTIONS"
+    line: "OPTIONS=\"-u ntp:ntp\""
   when:
     - rhel7cis_time_synchronization is defined
     - rhel7cis_time_synchronization == "ntp"
   tags:
-      - level1
-      - patch
-      - rule_2.2.1.2
+    - level1
+    - patch
+    - rule_2.2.1.2
 
 - name: "SCORED | 2.2.1.2 | PATCH | Ensure ntp is configured | modify /usr/lib/systemd/system/ntpd.service"
   lineinfile:
@@ -352,11 +352,11 @@
 
 - name: "SCORED | 2.2.1.3 | PATCH | Ensure chrony is configured"
   template:
-      src: chrony.conf.j2
-      dest: /etc/chrony.conf
-      owner: root
-      group: root
-      mode: 0644
+    src: chrony.conf.j2
+    dest: /etc/chrony.conf
+    owner: root
+    group: root
+    mode: 0644
   when:
     - rhel7cis_time_synchronization is defined
     - rhel7cis_time_synchronization == "chrony"
@@ -367,18 +367,18 @@
 
 - name: "SCORED | 2.2.1.3 | PATCH | Ensure chrony is configured | modify /etc/sysconfig/chronyd | 1"
   lineinfile:
-      dest: /etc/sysconfig/chronyd
-      regexp: "^(#)?OPTIONS"
-      line: "OPTIONS=\"-u chrony\""
-      state: present
-      create: yes
+    dest: /etc/sysconfig/chronyd
+    regexp: "^(#)?OPTIONS"
+    line: "OPTIONS=\"-u chrony\""
+    state: present
+    create: yes
   when:
     - rhel7cis_time_synchronization is defined
     - rhel7cis_time_synchronization == "chrony"
   tags:
-      - level1
-      - patch
-      - rule_2.2.1.3
+    - level1
+    - patch
+    - rule_2.2.1.3
 
 - name: "SCORED | 2.2.2 | PATCH | Ensure X Window System is not installed"
   yum:
@@ -388,32 +388,32 @@
     - (not rhel7cis_xwindows_required)
     - rhel7cis_disable_service_checks is defined and rhel7cis_disable_service_checks
   with_items:
-      - "@X Window System"
-      - "xorg-x11*"
+    - "@X Window System"
+    - "xorg-x11*"
   tags:
-      - level1
-      - scored
-      - xwindows
-      - patch
-      - rule_2.2.2
-      - disable_service_checks
+    - level1
+    - scored
+    - xwindows
+    - patch
+    - rule_2.2.2
+    - disable_service_checks
 
 - name: "SCORED | 2.2.3 | PATCH | Ensure Avahi Server is not enabled"
   service:
-      name: avahi-daemon
-      state: stopped
-      enabled: no
+    name: avahi-daemon
+    state: stopped
+    enabled: no
   when:
     - (not rhel7cis_avahi_server and avahi_service_status.stdout == "loaded")
     - rhel7cis_disable_service_checks is defined and rhel7cis_disable_service_checks
   tags:
-      - level1
-      - scored
-      - avahi
-      - services
-      - patch
-      - rule_2.2.3
-      - disable_service_checks
+    - level1
+    - scored
+    - avahi
+    - services
+    - patch
+    - rule_2.2.3
+    - disable_service_checks
 
 - name: "SCORED | 2.2.4 | PATCH | Ensure CUPS is not enabled"
   service:
@@ -602,17 +602,18 @@
 
 - name: "SCORED | 2.2.15 | PATCH | Ensure mail transfer agent is configured for local-only mode"
   lineinfile:
-      dest: /etc/postfix/main.cf
-      regexp: "^(#)?inet_interfaces"
-      line: "inet_interfaces = localhost"
+    dest: /etc/postfix/main.cf
+    regexp: "^(#)?inet_interfaces"
+    line: "inet_interfaces = loopback-only"
+  notify: systemctl restart postfix
   when: 
     - (not rhel7cis_is_mail_server and postfix_installed.rc == 0)
     - rhel7cis_disable_service_checks is defined and rhel7cis_disable_service_checks
   tags:
-      - level1
-      - patch
-      - rule_2.2.15
-      - disable_service_checks
+    - level1
+    - patch
+    - rule_2.2.15
+    - disable_service_checks
 
 - name: "SCORED | 2.2.16 | PATCH | Ensure NIS Server is not enabled"
   service:
