@@ -67,6 +67,10 @@ rhel7cis_update: false
 # The disable_service_checks can also be enabled via the skip tag function by skipping "disable_service_checks" tag to the running playbook
 rhel7cis_disable_service_checks: true
 
+# Set this value to true if the machine is joined to AD/LDAP server.
+# Set this value to false if the machine is not joined to AD/LDAP server.
+rhel7cis_ad_ldap_joined_machine: true
+
 # Service configuration booleans set true to keep service
 rhel7cis_cups_server: false
 rhel7cis_dhcp_server: false
