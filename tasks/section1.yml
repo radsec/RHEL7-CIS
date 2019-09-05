@@ -385,7 +385,8 @@
   command: /usr/sbin/aide --init -B 'database_out=file:/var/lib/aide/aide.db.gz'
   args:
       creates: /var/lib/aide/aide.db.gz
-  when: rhel7cis_config_aide
+  when:
+    - rhel7cis_config_aide is defined and rhel7cis_config_aide
   async: 45
   poll: 0
   tags:
@@ -431,7 +432,9 @@
       owner: root
       group: root
       mode: 0600
-  when: grub_cfg.stat.exists and grub_cfg.stat.islnk
+  when:
+    - grub_cfg is defined
+    - grub_cfg.stat.exists and grub_cfg.stat.islnk
   tags:
       - level1
       - scored
@@ -443,7 +446,9 @@
   grub_crypt:
       password: "{{ rhel7cis_bootloader_password }}"
   register: grub_pass
-  when: rhel7cis_set_boot_pass
+  when: 
+    - rhel7cis_set_boot_pass is defined
+    - rhel7cis_set_boot_pass
   tags:
       - level1
       - scored
@@ -534,7 +539,9 @@
 
 - name: "SCORED | 1.5.4 | PATCH | Ensure prelink is disabled"
   command: prelink -ua
-  when: prelink_installed.rc == 0
+  when: 
+    - prelink_installed is defined
+    - prelink_installed.rc == 0
   tags:
       - level1
       - scored
@@ -570,7 +577,9 @@
       conf: /etc/selinux/config
       policy: "{{ rhel7cis_selinux_pol }}"
       state: enforcing
-  when: not rhel7cis_selinux_disable
+  when:
+    - rhel7cis_selinux_disable is defined
+    - not rhel7cis_selinux_disable
   tags:
       - level2
       - scored
@@ -583,7 +592,9 @@
       conf: /etc/selinux/config
       policy: "{{ rhel7cis_selinux_pol }}"
       state: enforcing
-  when: not rhel7cis_selinux_disable
+  when:
+    - rhel7cis_selinux_disable is defined
+    - not rhel7cis_selinux_disable
   tags:
       - level2
       - scored
@@ -705,7 +716,9 @@
   yum:
       name: "*"
       state: latest
-  when: rhel7cis_update
+  when:
+    - rhel7cis_update is defined
+    - rhel7cis_update
   tags:
       - level1
       - level2
