@@ -4,6 +4,8 @@
       regexp: "^max_log_file"
       line: "max_log_file = 10"
       state: present
+  when:
+    - rhel7cis_level2 is defined and rhel7cis_level2
   tags:
       - level2
       - auditd
@@ -16,6 +18,8 @@
       regexp: "^admin_space_left_action"
       line: "admin_space_left_action = halt"
       state: present
+  when:
+    - rhel7cis_level2 is defined and rhel7cis_level2
   tags:
       - level2
       - auditd
@@ -28,6 +32,8 @@
       regexp: "^max_log_file_action"
       line: "max_log_file_action = keep_logs"
       state: present
+  when:
+    - rhel7cis_level2 is defined and rhel7cis_level2
   tags:
       - level2
       - auditd
@@ -39,7 +45,8 @@
       name: auditd
       state: started
       enabled: yes
-  when: 
+  when:
+    - rhel7cis_level2 is defined and rhel7cis_level2
     - rhel7cis_enable_auditd is defined and rhel7cis_enable_auditd
   tags:
       - level2
@@ -55,6 +62,8 @@
       follow: yes
   ignore_errors: yes
   notify: generate new grub config
+  when:
+    - rhel7cis_level2 is defined and rhel7cis_level2
   tags:
       - level2
       - auditd
@@ -64,6 +73,8 @@
 - name: "SCORED | 4.1.4 | PATCH | Ensure events that modify date and time information are collected"
   command: /bin/true
   changed_when: no
+  when:
+    - rhel7cis_level2 is defined and rhel7cis_level2
   tags:
       - level2
       - auditd
@@ -73,6 +84,8 @@
 - name: "SCORED | 4.1.5 | PATCH | Ensure events that modify user/group information are collected"
   command: /bin/true
   changed_when: no
+  when:
+    - rhel7cis_level2 is defined and rhel7cis_level2
   tags:
       - level2
       - auditd
@@ -82,6 +95,8 @@
 - name: "SCORED | 4.1.6 | PATCH | Ensure events that modify the system's network environment are collected"
   command: /bin/true
   changed_when: no
+  when:
+    - rhel7cis_level2 is defined and rhel7cis_level2
   tags:
       - level2
       - auditd
@@ -91,6 +106,8 @@
 - name: "SCORED | 4.1.7 | PATCH | Ensure events that modify the system's Mandatory Access Controls are collected"
   command: /bin/true
   changed_when: no
+  when:
+    - rhel7cis_level2 is defined and rhel7cis_level2
   tags:
       - level2
       - auditd
@@ -100,6 +117,8 @@
 - name: "SCORED | 4.1.8 | PATCH | Ensure login and logout events are collected"
   command: /bin/true
   changed_when: no
+  when:
+    - rhel7cis_level2 is defined and rhel7cis_level2
   tags:
       - level2
       - auditd
@@ -109,6 +128,8 @@
 - name: "SCORED | 4.1.9 | PATCH | Ensure session initiation information is collected"
   command: /bin/true
   changed_when: no
+  when:
+    - rhel7cis_level2 is defined and rhel7cis_level2
   tags:
       - level2
       - auditd
@@ -118,6 +139,8 @@
 - name: "SCORED | 4.1.10 | PATCH | Ensure discretionary access control permission modification events are collected"
   command: /bin/true
   changed_when: no
+  when:
+    - rhel7cis_level2 is defined and rhel7cis_level2
   tags:
       - level2
       - auditd
@@ -127,6 +150,8 @@
 - name: "SCORED | 4.1.11 | PATCH | Ensure unsuccessful unauthorized file access attempts are collected"
   command: /bin/true
   changed_when: no
+  when:
+    - rhel7cis_level2 is defined and rhel7cis_level2
   tags:
       - level2
       - auditd
@@ -136,6 +161,8 @@
 - name: "SCORED | 4.1.12 | PATCH | Ensure use of privileged commands is collected"
   command: /bin/true
   changed_when: no
+  when:
+    - rhel7cis_level2 is defined and rhel7cis_level2
   tags:
       - level2
       - auditd
@@ -147,6 +174,8 @@
       dest: /etc/audit/rules.d/audit.rules
       line: "-a always,exit -F arch=b64 -S mount -F auid>=1000 -F auid!=4294967295 -k mounts"
       state: present
+  when:
+    - rhel7cis_level2 is defined and rhel7cis_level2
   tags:
       - level2
       - auditd
@@ -158,6 +187,8 @@
       dest: /etc/audit/audit.rules
       line: "-a always,exit -F arch=b64 -S mount -F auid>=1000 -F auid!=4294967295 -k mounts"
       state: present
+  when:
+    - rhel7cis_level2 is defined and rhel7cis_level2
   tags:
       - level2
       - auditd
@@ -169,6 +200,8 @@
       dest: /etc/audit/rules.d/audit.rules
       line: "-a always,exit -F arch=b32 -S mount -F auid>=1000 -F auid!=4294967295 -k mounts"
       state: present
+  when:
+    - rhel7cis_level2 is defined and rhel7cis_level2
   tags:
       - level2
       - auditd
@@ -178,6 +211,8 @@
 - name: "SCORED | 4.1.14 | PATCH | Ensure file deletion events by users are collected"
   command: /bin/true
   changed_when: no
+  when:
+    - rhel7cis_level2 is defined and rhel7cis_level2
   tags:
       - level2
       - auditd
@@ -189,6 +224,8 @@
       dest: /etc/audit/rules.d/audit.rules
       line: "-w /etc/sudoers -p wa -k scope"
       state: present
+  when:
+    - rhel7cis_level2 is defined and rhel7cis_level2
   tags:
       - level2
       - auditd
@@ -200,6 +237,8 @@
       dest: /etc/audit/audit.rules
       line: "-w /etc/sudoers -p wa -k scope"
       state: present
+  when:
+    - rhel7cis_level2 is defined and rhel7cis_level2
   tags:
       - level2
       - auditd
@@ -211,6 +250,8 @@
       dest: /etc/audit/rules.d/audit.rules
       line: "-w /etc/sudoers.d -p wa -k scope"
       state: present
+  when:
+    - rhel7cis_level2 is defined and rhel7cis_level2
   tags:
       - level2
       - auditd
@@ -220,6 +261,8 @@
 - name: "SCORED | 4.1.16 | PATCH | Ensure system administrator actions (sudolog) are collected"
   command: /bin/true
   changed_when: no
+  when:
+    - rhel7cis_level2 is defined and rhel7cis_level2
   tags:
       - level2
       - auditd
@@ -229,6 +272,8 @@
 - name: "SCORED | 4.1.17 | PATCH | Ensure kernel module loading and unloading is collected"
   command: /bin/true
   changed_when: no
+  when:
+    - rhel7cis_level2 is defined and rhel7cis_level2
   tags:
       - level2
       - auditd
@@ -238,6 +283,8 @@
 - name: "SCORED | 4.1.18 | PATCH | Ensure the audit configuration is immutable"
   command: /bin/true
   changed_when: no
+  when:
+    - rhel7cis_level2 is defined and rhel7cis_level2
   tags:
       - level2
       - auditd
@@ -249,9 +296,9 @@
     name: rsyslogd
     enabled: yes
   when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - rhel7cis_rsyslog is defined and rhel7cis_rsyslog
   tags:
-      - level1
       - level2
       - patch
       - rule_4.2.1.1
@@ -259,13 +306,13 @@
 - name: "NOTSCORED | 4.2.1.2 | PATCH | Ensure logging is configured"
   command: /bin/true
   changed_when: no
-  when: 
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - rhel7cis_rsyslog is defined and rhel7cis_log_server is defined
     - rhel7cis_rsyslog
     - rhel7cis_log_server
   tags:
       - level1
-      - level2
       - patch
       - rule_4.2.1.2
 
@@ -276,10 +323,10 @@
       line: '$FileCreateMode 0640'
       create: yes
   when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - rhel7cis_rsyslog is defined and rhel7cis_rsyslog
   tags:
       - level1
-      - level2
       - patch
       - rule_4.2.1.3
 
@@ -289,10 +336,10 @@
     regexp: "^\\*\\.\\*"
     line: "*.* @@{{ rhel7cis_rsyslog_loghost_address }}"
   when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - rhel7cis_rsyslog is defined and rhel7cis_rsyslog
   tags:
       - level1
-      - level2
       - patch
       - rule_4.2.1.4
 
@@ -302,13 +349,13 @@
       regexp: '^\$ModLoad imtcp'
       line: '# $ModLoad imtcp'
       create: yes
-  when: 
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - rhel7cis_rsyslog is defined and rhel7cis_rsyslog is defined
     - not rhel7cis_log_server
     - rhel7cis_rsyslog
   tags:
       - level1
-      - level2
       - patch
       - rule_4.2.1.5
 
@@ -318,13 +365,13 @@
       regexp: '^\$InputTCPServerRun 514'
       line: '# $InputTCPServerRun 514'
       create: yes
-  when: 
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - rhel7cis_rsyslog is defined and rhel7cis_rsyslog is defined
     - not rhel7cis_log_server
     - rhel7cis_rsyslog
   tags:
       - level1
-      - level2
       - patch
       - rule_4.2.1.5
 
@@ -334,13 +381,13 @@
       regexp: '^\$ModLoad imtcp'
       line: '$ModLoad imtcp'
       create: yes
-  when: 
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - rhel7cis_rsyslog is defined and rhel7cis_log_server is defined
     - rhel7cis_rsyslog
     - rhel7cis_log_server
   tags:
       - level1
-      - level2
       - patch
       - rule_4.2.1.5
 
@@ -350,13 +397,13 @@
       regexp: '^\$InputTCPServerRun 514'
       line: '$InputTCPServerRun 514'
       create: yes
-  when: 
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - rhel7cis_rsyslog is defined and rhel7cis_log_server is defined
     - rhel7cis_rsyslog
     - rhel7cis_log_server
   tags:
       - level1
-      - level2
       - patch
       - rule_4.2.1.5
 
@@ -366,23 +413,23 @@
     name: syslog-ng
     enabled: yes
   when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - rhel7cis_rsyslog is defined and rhel7cis_rsyslog
   tags:
       - level1
-      - level2
       - patch
       - rule_4.2.2.1
 
 - name: "NOTSCORED | 4.2.2.2 | PATCH | Ensure logging is configured"
   command: /bin/true
   changed_when: no
-  when: 
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - rhel7cis_rsyslog is defined and rhel7cis_log_server is defined
     - rhel7cis_rsyslog
     - rhel7cis_log_server
   tags:
       - level1
-      - level2
       - patch
       - rule_4.2.2.2
 
@@ -392,39 +439,39 @@
     regexp: '^perm(0640);'
     line: '^perm(0640);'
     create: yes
-  when: 
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - rhel7cis_syslog_ng is defined and rhel7cis_log_server is defined
     - rhel7cis_syslog_ng
     - rhel7cis_log_server
   tags:
       - level1
-      - level2
       - patch
       - rule_4.2.2.3
 
 - name: "NOTSCORED | 4.2.2.4 | PATCH | Ensure syslog-ng is configured to send logs to a remote log host"
   command: /bin/true
   changed_when: no
-  when: 
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - rhel7cis_syslog_ng is defined and rhel7cis_log_server is defined
     - rhel7cis_syslog_ng
     - rhel7cis_log_server
   tags:
       - level1
-      - level2
       - patch
       - rule_4.2.2.4
 
 - name: "NOTSCORED | 4.2.2.5 | PATCH | Ensure remote syslog-ng messages are only accepted on designated log hosts"
   command: /bin/true
   changed_when: no
-  when: 
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - rhel7cis_syslog_ng is defined and rhel7cis_log_server is defined
     - rhel7cis_syslog_ng
     - rhel7cis_log_server
   tags:
       - level1
-      - level2
       - patch
       - rule_4.2.2.5
 
@@ -433,10 +480,10 @@
     name: rsyslog
     state: present
   when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - rhel7cis_rsyslog is defined and rhel7cis_rsyslog
   tags:
       - level1
-      - level2
       - low
       - patch
       - rule_4.2.3
@@ -456,9 +503,10 @@
 
 - name: "SCORED | 4.2.4 | PATCH | Ensure permissions on all logfiles are configured"
   command: find /var/log -type f -exec chmod g-wx,o-rwx {} +
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
       - level1
-      - level2
       - patch
       - rule_4.2.4
 
@@ -468,8 +516,9 @@
       regexp: "^#daily"
       line: "daily"
       create: yes
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
       - level1
-      - level2
       - patch
       - rule_4.3
