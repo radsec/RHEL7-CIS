@@ -184,7 +184,10 @@
     - rule_6.2.1
 
 - name: "SCORED | 6.2.2 | PATCH | Ensure no legacy '+' entries exist in /etc/passwd"
-  command: sed -i '/^+/ d' /etc/passwd
+  command: "sed -i '/^+/ d' /etc/passwd"
+  args:
+    warn: no
+  ignore_errors: yes
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
