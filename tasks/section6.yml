@@ -464,6 +464,7 @@
   changed_when: no
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
+  tags:
     - rule_6.2.9
     - level1
     - patch
