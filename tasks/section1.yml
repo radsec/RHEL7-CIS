@@ -173,7 +173,7 @@
   changed_when: no
   failed_when: no
   when:
-    - rhel7cis_level2 is defined and rhel7cis_level2
+    - rhel7cis_level1 is defined and rhel7cis_level1 or rhel7cis_level2 is defined and rhel7cis_level2
   tags:
       - level2
       - scored
@@ -187,6 +187,8 @@
     path: /var/tmp
     opts: "rw,nosuid,nodev,noexec,relatime"
     state: mounted
+    fstype: "tmpfs"
+    src: tmpfs
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
@@ -242,6 +244,8 @@
     path: /home
     opts: nodev
     state: mounted
+    fstype: "ext4"
+    src: home
   when:
     - rhel7cis_level2 is defined and rhel7cis_level2
   tags:
