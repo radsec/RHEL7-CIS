@@ -1,6 +1,8 @@
 - name: "NOTSCORED | 6.1.1 | PATCH | Audit system file permissions"
   command: /bin/true
   changed_when: no
+  when:
+    - rhel7cis_level2 is defined and rhel7cis_level2
   tags:
     - level2
     - patch
@@ -12,9 +14,10 @@
     owner: root
     group: root
     mode: 0644
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - level1
-    - level2
     - low
     - patch
     - rule_6.1.2
@@ -25,9 +28,10 @@
     owner: root
     group: root
     mode: 0000
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - level1
-    - level2
     - low
     - patch
     - rule_6.1.3
@@ -38,9 +42,10 @@
     owner: root
     group: root
     mode: 0644
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - level1
-    - level2
     - low
     - patch
     - rule_6.1.4
@@ -51,9 +56,10 @@
     owner: root
     group: root
     mode: 0000
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - level1
-    - level2
     - low
     - patch
     - rule_6.1.5
@@ -64,9 +70,10 @@
     owner: root
     group: root
     mode: 0644
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - level1
-    - level2
     - low
     - patch
     - rule_6.1.6
@@ -77,9 +84,10 @@
     owner: root
     group: root
     mode: 0000
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - level1
-    - level2
     - low
     - patch
     - rule_6.1.7
@@ -90,9 +98,10 @@
     owner: root
     group: root
     mode: 0600
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - level1
-    - level2
     - low
     - patch
     - rule_6.1.8
@@ -103,9 +112,10 @@
     owner: root
     group: root
     mode: 0600
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - level1
-    - level2
     - low
     - patch
     - rule_6.1.9
@@ -113,45 +123,50 @@
 - name: "SCORED | 6.1.10 | PATCH | Ensure no world writable files exist"
   command: /bin/true
   changed_when: no
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - level1
-    - level2
     - patch
     - rule_6.1.10
 
 - name: "SCORED | 6.1.11 | PATCH | Ensure no unowned files or directories exist"
   command: /bin/true
   changed_when: no
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - level1
-    - level2
     - patch
     - rule_6.1.11
 
 - name: "SCORED | 6.1.12 | PATCH | Ensure no ungrouped files or directories exist"
   command: /bin/true
   changed_when: no
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - level1
-    - level2
     - patch
     - rule_6.1.12
 
 - name: "NOTSCORED | 6.1.13 | PATCH | Audit SUID executables"
   command: /bin/true
   changed_when: no
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - level1
-    - level2
     - patch
     - rule_6.1.13
 
 - name: "NOTSCORED | 6.1.14 | PATCH | Audit SGID executables"
   command: /bin/true
   changed_when: no
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - level1
-    - level2
     - patch
     - rule_6.1.14
 
@@ -159,37 +174,40 @@
   command: passwd -l {{ item }}
   with_items: "{{ empty_password_accounts.stdout_lines }}"
   when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - empty_password_accounts is defined
     - empty_password_accounts.rc
   tags:
     - level1
-    - level2
     - low
     - patch
     - rule_6.2.1
 
 - name: "SCORED | 6.2.2 | PATCH | Ensure no legacy '+' entries exist in /etc/passwd"
   command: sed -i '/^+/ d' /etc/passwd
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - level1
-    - level2
     - patch
     - rule_6.2.2
 
 - name: "SCORED | 6.2.3 | PATCH | Ensure no legacy '+' entries exist in /etc/shadow"
   command: sed -i '/^+/ d' /etc/shadow
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - level1
-    - level2
     - low
     - patch
     - rule_6.2.3
 
 - name: "SCORED | 6.2.4 | PATCH | Ensure no legacy '+' entries exist in /etc/group"
   command: sed -i '/^+/ d' /etc/group
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - level1
-    - level2
     - low
     - patch
     - rule_6.2.4
@@ -198,11 +216,11 @@
   command: passwd -l {{ item }}
   with_items: "{{ uid_zero_accounts_except_root.stdout_lines }}"
   when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - uid_zero_accounts_except is defined
     - uid_zero_accounts_except_root.rc
   tags:
     - level1
-    - level2
     - low
     - patch
     - rule_6.2.5
@@ -214,6 +232,9 @@
     owner: root
     group: root
     mode: 0700
+  changed_when: no
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - rule_6.2.6
     - low
@@ -225,6 +246,8 @@
   args:
     executable: /bin/bash
   register: root_path_integrity
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - rule_6.2.6
     - low
@@ -235,6 +258,7 @@
   debug:
     var: root_path_integrity.stdout_lines
   when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - root_path_integrity is defined
     - root_path_integrity.stdout != ""
   tags:
@@ -247,6 +271,7 @@
   debug:
     msg: "PASS | 6.2.6 | root PATH integrity"
   when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - root_path_integrity is defined
     - root_path_integrity.stdout == ""
   tags:
@@ -262,6 +287,8 @@
     group: root
     state: absent
   changed_when: no
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - rule_6.2.6
     - low
@@ -275,6 +302,9 @@
     owner: root
     group: root
     mode: 0700
+  changed_when: no
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - rule_6.2.7
     - low
@@ -286,6 +316,8 @@
   args:
     executable: /bin/bash
   register: home_directories_exist
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - rule_6.2.7
     - low
@@ -296,6 +328,7 @@
   debug:
     var: home_directories_exist.stdout_lines
   when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - home_directories_exist is defined
     - home_directories_exist.stdout != ""
   tags:
@@ -308,6 +341,7 @@
   debug:
     msg: "PASS | 6.2.7 | All users' home directories exist."
   when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - home_directories_exist is defined
     - home_directories_exist.stdout == ""
   tags:
@@ -323,6 +357,8 @@
     group: root
     state: absent
   changed_when: no
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - rule_6.2.7
     - low
@@ -337,7 +373,8 @@
     group: root
     mode: 0700
   changed_when: no
-  when: 
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - rhel7cis_modify_user_homes is defined
     - rhel7cis_modify_user_homes
   tags:
@@ -352,6 +389,7 @@
     executable: /bin/bash
   register: home_directories_permissions
   when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - rhel7cis_modify_user_homes is defined
     - rhel7cis_modify_user_homes
   tags:
@@ -364,6 +402,7 @@
   debug:
     var: home_directories_permissions.stdout_lines
   when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - rhel7cis_modify_user_homes is defined and home_directories_permissions is defined
     - rhel7cis_modify_user_homes
   tags:
@@ -376,6 +415,7 @@
   debug:
     msg: "PASS | 6.2.8 | Users' home directories permissions are 750 or more restrictive."
   when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - rhel7cis_modify_user_homes is defined and home_directories_permissions is defined
     - home_directories_permissions.stdout == ""
     - rhel7cis_modify_user_homes
@@ -393,6 +433,7 @@
     state: absent
   changed_when: no
   when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - rhel7cis_modify_user_homes is defined
     - rhel7cis_modify_user_homes
   tags:
@@ -409,7 +450,8 @@
     group: root
     mode: 0700
   changed_when: no
-  tags:
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - rule_6.2.9
     - level1
     - patch
@@ -420,6 +462,8 @@
   args:
     executable: /bin/bash
   register: home_directories_own
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - rule_6.2.9
     - level1
@@ -429,6 +473,8 @@
 - name: "SCORED | 6.2.9 | PATCH | Ensure users own their home directories"
   debug:
     var: home_directories_own.stdout_lines
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - rule_6.2.9
     - level1
@@ -437,7 +483,9 @@
 - name: "SCORED | 6.2.9 | PATCH | Ensure users own their home directories"
   debug:
     msg: "PASS | 6.2.9 | Users' own their home directories."
-  when: home_directories_own.stdout == ""
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
+    - home_directories_own is defined and home_directories_own.stdout == ""
   tags:
     - rule_6.2.9
     - level1
@@ -451,6 +499,8 @@
     group: root
     state: absent
   changed_when: no
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - rule_6.2.9
     - level1
@@ -465,6 +515,8 @@
     group: root
     mode: 0700
   changed_when: no
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - rule_6.2.10
     - patch
@@ -476,6 +528,8 @@
   args:
     executable: /bin/bash
   register: user_dot_files
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - rule_6.2.10
     - patch
@@ -485,6 +539,8 @@
 - name: "SCORED | 6.2.10 | PATCH | Ensure users' dot files are not group or world writable"
   debug:
     var: user_dot_files.stdout_lines
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - rule_6.2.10
     - level1
@@ -495,6 +551,7 @@
   debug:
     msg: "PASS | 6.2.10 | Users' dot files are not group or world writable."
   when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - user_dot_files is defined
     - user_dot_files.stdout == ""
   tags:
@@ -510,6 +567,8 @@
     group: root
     state: absent
   changed_when: no
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - rule_6.2.10
     - patch
@@ -521,6 +580,8 @@
     state: absent
     dest: "~{{ item }}/.forward"
   with_items: "{{ users.stdout_lines }}"
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - rule_6.2.11
     - patch
@@ -532,6 +593,8 @@
     state: absent
     dest: "~{{ item }}/.netrc"
   with_items: "{{ users.stdout_lines }}"
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - rule_6.2.12
     - patch
@@ -546,6 +609,8 @@
     group: root
     mode: 0700
   changed_when: no
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - rule_6.2.13
     - patch
@@ -557,6 +622,8 @@
   args:
     executable: /bin/bash
   register: dot_netrc_files
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - rule_6.2.13
     - patch
@@ -566,6 +633,8 @@
 - name: "SCORED | 6.2.13 | PATCH | Ensure users' .netrc files are not group or world accessible"
   debug:
     var: dot_netrc_files.stdout_lines
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - rule_6.2.13
     - patch
@@ -576,6 +645,7 @@
   debug:
     msg: "PASS | 6.2.13 | Users' .netrc files are not group or world accessible."
   when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - dot_netrc_files is defined
     - dot_netrc_files.stdout == ""
   tags:
@@ -591,6 +661,8 @@
     group: root
     state: absent
   changed_when: no
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - rule_6.2.13
     - patch
@@ -602,6 +674,8 @@
     state: absent
     dest: "~{{ item }}/.rhosts"
   with_items: "{{ users.stdout_lines }}"
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - rule_6.2.14
     - patch
@@ -616,6 +690,8 @@
     group: root
     mode: 0700
   changed_when: no
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - rule_6.2.15
     - patch
@@ -627,6 +703,8 @@
   args:
     executable: /bin/bash
   register: check_groups_in_passwd
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - rule_6.2.15
     - patch
@@ -636,6 +714,8 @@
 - name: "SCORED | 6.2.15 | PATCH | Ensure all groups in /etc/passwd exist in /etc/group"
   debug:
     var: check_groups_in_passwd.stdout_lines
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - rule_6.2.15
     - patch
@@ -645,7 +725,9 @@
 - name: "SCORED | 6.2.15 | PATCH | Ensure all groups in /etc/passwd exist in /etc/group"
   debug:
     msg: "PASS | 6.2.15 | All groups exist in /etc/group."
-  when: check_groups_in_passwd.stdout == ""
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
+    - check_groups_in_passwd is defined and check_groups_in_passwd.stdout == ""
   tags:
     - rule_6.2.15
     - patch
@@ -659,6 +741,8 @@
     group: root
     state: absent
   changed_when: no
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - rule_6.2.15
     - patch
@@ -673,6 +757,8 @@
     group: root
     mode: 0700
   changed_when: no
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - rule_6.2.16
     - patch
@@ -684,6 +770,8 @@
   args:
     executable: /bin/bash
   register: duplicate_uids
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - rule_6.2.16
     - patch
@@ -693,6 +781,8 @@
 - name: "SCORED | 6.2.16 | PATCH | Ensure no duplicate UIDs exist"
   debug:
     var: duplicate_uids.stdout_lines
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - rule_6.2.16
     - patch
@@ -703,6 +793,7 @@
   debug:
     msg: "PASS | 6.2.16 | No duplicate UIDs exist."
   when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - duplicate_uids is defined
     - duplicate_uids.stdout == ""
   tags:
@@ -718,6 +809,8 @@
     group: root
     state: absent
   changed_when: no
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - rule_6.2.16
     - patch
@@ -732,6 +825,8 @@
     group: root
     mode: 0700
   changed_when: no
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - rule_6.2.17
     - patch
@@ -742,6 +837,8 @@
   shell: /opt/6.2.17.sh
   args:
     executable: /bin/bash
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   register: duplicate_gids
   tags:
     - rule_6.2.17
@@ -752,6 +849,8 @@
 - name: "SCORED | 6.2.17 | PATCH | Ensure no duplicate GIDs exist"
   debug:
     var: duplicate_gids.stdout_lines
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - rule_6.2.17
     - patch
@@ -762,6 +861,7 @@
   debug:
     msg: "PASS | 6.2.17 | No duplicate GIDs exist."
   when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - duplicate_gids is defined
     - duplicate_gids.stdout == ""
   tags:
@@ -777,6 +877,8 @@
     group: root
     state: absent
   changed_when: no
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - rule_6.2.17
     - patch
@@ -791,6 +893,8 @@
     group: root
     mode: 0700
   changed_when: no
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - rule_6.2.18
     - patch
@@ -802,6 +906,8 @@
   args:
     executable: /bin/bash
   register: duplicate_users
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - rule_6.2.18
     - patch
@@ -811,6 +917,8 @@
 - name: "SCORED | 6.2.18 | PATCH | Ensure no duplicate user names exist"
   debug:
     var: duplicate_users.stdout_lines
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - rule_6.2.18
     - patch
@@ -821,6 +929,7 @@
   debug:
     msg: "PASS | 6.2.18 | No duplicate user names exist"
   when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - duplicate_users is defined
     - duplicate_users.stdout == ""
   tags:
@@ -836,6 +945,8 @@
     group: root
     state: absent
   changed_when: no
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - rule_6.2.18
     - patch
@@ -850,6 +961,8 @@
     group: root
     mode: 0700
   changed_when: no
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - rule_6.2.19
     - patch
@@ -861,6 +974,8 @@
   args:
     executable: /bin/bash
   register: duplicate_groups
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - rule_6.2.19
     - patch
@@ -870,6 +985,8 @@
 - name: "SCORED | 6.2.19 | PATCH | Ensure no duplicate group names exist"
   debug:
     var: duplicate_groups.stdout_lines
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - rule_6.2.19
     - patch
@@ -880,6 +997,7 @@
   debug:
     msg: "PASS | 6.2.19 | No duplicate group names exist"
   when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - duplicate_groups is defined
     - duplicate_groups.stdout == ""
   tags:
@@ -895,6 +1013,8 @@
     group: root
     state: absent
   changed_when: no
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - rule_6.2.19
     - patch

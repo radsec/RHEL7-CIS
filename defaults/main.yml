@@ -207,6 +207,11 @@ rhel7cis_syslog_ng_loghost_address: INSERT_DNS_NAME_HERE
 # Section 5.2.9 | Ensure SSH root login is disabled
 rhel7cis_permit_ssh_root_login_disabled: true
 
+# Section 5.2.11 | Ensure only strong MAC algorithms are used
+rhel7cis_ssh_mac_algorithms: "hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,umac-128@openssh.com"
+# Original # rhel7cis_ssh_mac_algorithms: "hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,umac-128@openssh.com"
+
+
 # Section 5.3.1 | Ensure password creation requirements are configured
 rhel7cis_password_creation_requirements: true
 
