@@ -4,6 +4,8 @@
       regexp: "^(#)?install cramfs(\\s|$)"
       line: "install cramfs /bin/true"
       create: yes
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
       - level1
       - scored
@@ -17,6 +19,8 @@
       regexp: "^(#)?install freevxfs(\\s|$)"
       line: "install freevxfs /bin/true"
       create: yes
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
       - level1
       - scored
@@ -30,6 +34,8 @@
       regexp: "^(#)?install jffs2(\\s|$)"
       line: "install jffs2 /bin/true"
       create: yes
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
       - level1
       - scored
@@ -43,6 +49,8 @@
       regexp: "^(#)?install hfs(\\s|$)"
       line: "install hfs /bin/true"
       create: yes
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
       - level1
       - scored
@@ -56,6 +64,8 @@
       regexp: "^(#)?install hfsplus(\\s|$)"
       line: "install hfsplus /bin/true"
       create: yes
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
       - level1
       - scored
@@ -69,6 +79,8 @@
       regexp: "^(#)?install squashfs(\\s|$)"
       line: "install squashfs /bin/true"
       create: yes
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
       - level1
       - scored
@@ -82,6 +94,8 @@
       regexp: "^(#)?install udf(\\s|$)"
       line: "install udf /bin/true"
       create: yes
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
       - level1
       - scored
@@ -95,6 +109,8 @@
       regexp: "^(#)?install vfat(\\s|$)"
       line: "install vfat /bin/true"
       create: yes
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
       - level1
       - scored
@@ -109,6 +125,8 @@
       enabled: yes
       masked: no
       state: started
+  when:
+    - rhel7cis_level2 is defined and rhel7cis_level2
   tags:
       - level2
       - scored
@@ -126,6 +144,8 @@
       group: root
       mode: 0644
   notify: systemd restart tmp.mount
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
       - level1
       - scored
@@ -139,6 +159,8 @@
   register: var_mounted
   changed_when: no
   failed_when: no
+  when:
+    - rhel7cis_level2 is defined and rhel7cis_level2
   tags:
       - level2
       - scored
@@ -150,6 +172,8 @@
   register: var_tmp_mounted
   changed_when: no
   failed_when: no
+  when:
+    - rhel7cis_level2 is defined and rhel7cis_level2
   tags:
       - level2
       - scored
@@ -162,12 +186,9 @@
   mount:
     path: /var/tmp
     opts: "rw,nosuid,nodev,noexec,relatime"
-    fstype: "tmpfs"
-    src: tmpfs
     state: mounted
   when:
-    - var_tmp_mounted is defined
-    - var_tmp_mounted.rc|float == 0
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - level1
     - scored
@@ -182,6 +203,8 @@
   register: var_log_mounted
   changed_when: no
   failed_when: no
+  when:
+    - rhel7cis_level2 is defined and rhel7cis_level2
   tags:
       - level2
       - scored
@@ -193,6 +216,8 @@
   register: var_log_audit_mounted
   changed_when: no
   failed_when: no
+  when:
+    - rhel7cis_level2 is defined and rhel7cis_level2
   tags:
       - level2
       - scored
@@ -204,6 +229,8 @@
   register: home_mounted
   changed_when: no
   failed_when: no
+  when:
+    - rhel7cis_level2 is defined and rhel7cis_level2
   tags:
       - level2
       - scored
@@ -215,13 +242,9 @@
     path: /home
     opts: nodev
     state: mounted
-    fstype: "ext4"
-    src: home
   when:
-    - home_mounted is defined
-    - home_mounted.rc|float == 0
+    - rhel7cis_level2 is defined and rhel7cis_level2
   tags:
-      - level1
       - level2
       - patch
       - rule_1.1.14
@@ -230,22 +253,26 @@
          SCORED | 1.1.16 | PATCH | Ensure nosuid option set on /dev/shm partition\n
          SCORED | 1.1.17 | PATCH | Ensure noexec option set on /dev/shm partition"
   mount:
-    name: /dev/shm
-    src: tmpfs
-    state: mounted
-    fstype: tmpfs
-    opts: "defaults,nodev,nosuid,noexec"
+      name: /dev/shm
+      src: tmpfs
+      state: mounted
+      fstype: tmpfs
+      opts: "defaults,nodev,nosuid,noexec"
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
-    - level1
-    - scored
-    - patch
-    - rule_1.1.15
-    - rule_1.1.16
-    - rule_1.1.17
+      - level1
+      - scored
+      - patch
+      - rule_1.1.15
+      - rule_1.1.16
+      - rule_1.1.17
 
 - name: "NOTSCORED | 1.1.18 | PATCH | Ensure nodev option set on removable media partitions"
   command: /bin/true
   changed_when: no
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
       - level1
       - notscored
@@ -255,6 +282,8 @@
 - name: "NOTSCORED | 1.1.19 | PATCH | Ensure nosuid option set on removable media partitions"
   command: /bin/true
   changed_when: no
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
       - level1
       - notscored
@@ -264,6 +293,7 @@
 - name: "NOTSCORED | 1.1.20 | PATCH | Ensure noexec option set on removable media partitions"
   command: /bin/true
   changed_when: no
+  
   tags:
       - level1
       - notscored
@@ -273,9 +303,10 @@
 - name: "SCORED | 1.1.21 | PATCH | Ensure sticky bit is set on all world-writable directories"
   shell: df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type d -perm -0002 2>/dev/null | xargs chmod a+t
   #when: sticky_bit_on_worldwritable_dirs_audit.rc == '0'
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
       - level1
-      - level2
       - patch
       - rule_1.1.21
 
@@ -284,8 +315,9 @@
       name: autofs
       enabled: no
   when:
-    - not rhel7cis_allow_autofs
-    - autofs_service_status.stdout == "loaded"
+    - rhel7cis_level1 is defined and rhel7cis_level1
+    - rhel7cis_allow_autofs is defined and not rhel7cis_allow_autofs
+    - autofs_service_status is defined and autofs_service_status.stdout == "loaded"
   tags:
       - level1
       - patch
@@ -294,6 +326,8 @@
 - name: "NOTSCORED | 1.2.1 | PATCH | Ensure package manager repositories are configured"
   command: /bin/true
   changed_when: no
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
       - level1
       - notscored
@@ -305,6 +339,8 @@
       name: /etc/yum.conf
       regexp: "^gpgcheck=0"
       replace: "gpgcheck=1"
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
       - level1
       - scored
@@ -317,6 +353,8 @@
       patterns: "*.repo"
   register: yum_repos
   changed_when: no
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
       - level1
       - scored
@@ -330,6 +368,8 @@
       replace: "gpgcheck=1"
   with_items:
       - "{{ yum_repos.files }}"
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
       - level1
       - scored
@@ -339,6 +379,8 @@
 - name: "NOTSCORED | 1.2.3 | PATCH | Ensure GPG keys are configured"
   command: /bin/true
   changed_when: no
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
       - level1
       - notscored
@@ -348,7 +390,9 @@
 - name: "NOTSCORED | 1.2.4 | PATCH | Ensure Red Hat Network or Subscription Manager connection is configured"
   command: /bin/true
   changed_when: no
-  when: ansible_distribution == "RedHat"
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
+    - ansible_distribution == "RedHat"
   tags:
       - level1
       - notscored
@@ -361,9 +405,10 @@
       state: stopped
       enabled: no
   when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - ansible_distribution == "RedHat"
-    - rhnsd_service_status
-    - not rhel7cis_rhnsd_required
+    - rhnsd_service_status is defined  and rhnsd_service_status
+    - rhel7cis_rhnsd_required is defined and not rhel7cis_rhnsd_required
   tags:
       - level2
       - notscored
@@ -374,6 +419,8 @@
   yum:
       name: aide
       state: present
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
       - level1
       - scored
@@ -386,6 +433,7 @@
   args:
       creates: /var/lib/aide/aide.db.gz
   when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - rhel7cis_config_aide is defined and rhel7cis_config_aide
   async: 45
   poll: 0
@@ -407,6 +455,8 @@
       month: "{{ rhel7cis_aide_cron['aide_month'] | default('*') }}"
       weekday: "{{ rhel7cis_aide_cron['aide_weekday'] | default('*') }}"
       job: "{{ rhel7cis_aide_cron['aide_job'] }}"
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
       - level1
       - scored
@@ -433,8 +483,8 @@
       group: root
       mode: 0600
   when:
-    - grub_cfg is defined
-    - grub_cfg.stat.exists and grub_cfg.stat.islnk
+    - rhel7cis_level1 is defined and rhel7cis_level1
+    - grub_cfg is defined and grub_cfg.stat.exists and grub_cfg.stat.islnk
   tags:
       - level1
       - scored
@@ -446,9 +496,9 @@
   grub_crypt:
       password: "{{ rhel7cis_bootloader_password }}"
   register: grub_pass
-  when: 
-    - rhel7cis_set_boot_pass is defined
-    - rhel7cis_set_boot_pass
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
+    - rhel7cis_set_boot_pass is defined and rhel7cis_set_boot_pass
   tags:
       - level1
       - scored
@@ -460,7 +510,9 @@
   copy:
       dest: /boot/grub2/user.cfg
       content: "GRUB2_PASSWORD={{ grub_pass.passhash }}"
-  when: rhel7cis_set_boot_pass and grub_pass is defined and grub_pass.passhash is defined and grub_pass.passhash != ''
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
+    - rhel7cis_set_boot_pass is defined and rhel7cis_set_boot_pass and grub_pass is defined and grub_pass.passhash is defined and grub_pass.passhash != ''
   notify: generate new grub config
   tags:
       - level1
@@ -471,16 +523,20 @@
 
 - name: "NOTSCORED | 1.4.3 | PATCH | Ensure authentication required for single user mode"
   command: /bin/true
+  changed_when: no
+  when:
+    - rhel7cis_level2 is defined and rhel7cis_level2
   tags:
-      - level1
       - level2
       - patch
       - rule_1.4.3
 
 - name: "NOTSCORED | 1.4.3 | PATCH | Ensure authentication required for single user mode"
   command: /bin/true
+  changed_when: no
+  when:
+    - rhel7cis_level2 is defined and rhel7cis_level2
   tags:
-      - level1
       - level2
       - patch
       - rule_1.4.3
@@ -492,6 +548,8 @@
       regexp: '^#?\\*.*core'
       line: '*                hard    core            0'
       insertbefore: '^# End of file'
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
       - level1
       - scored
@@ -507,6 +565,8 @@
       reload: yes
       sysctl_set: yes
       ignoreerrors: yes
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
       - level1
       - scored
@@ -517,8 +577,9 @@
 - name: "NOTSCORED | 1.5.2 | PATCH | Ensure XD/NX support is enabled"
   command: /bin/true
   changed_when: no
+  when:
+    - rhel7cis_level2 is defined and rhel7cis_level2
   tags:
-      - level1
       - level2
       - patch
       - rule_1.5.2
@@ -531,6 +592,8 @@
       reload: yes
       sysctl_set: yes
       ignoreerrors: yes
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
       - level1
       - scored
@@ -539,9 +602,9 @@
 
 - name: "SCORED | 1.5.4 | PATCH | Ensure prelink is disabled"
   command: prelink -ua
-  when: 
-    - prelink_installed is defined
-    - prelink_installed.rc == 0
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
+    - prelink_installed is defined and prelink_installed.rc == 0
   tags:
       - level1
       - scored
@@ -552,6 +615,8 @@
   yum:
     name: prelink
     state: absent
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
       - level1
       - scored
@@ -566,6 +631,8 @@
   register: selinux_grub_patch
   ignore_errors: yes
   notify: generate new grub config
+  when:
+    - rhel7cis_level2 is defined and rhel7cis_level2
   tags:
       - level2
       - scored
@@ -578,8 +645,8 @@
       policy: "{{ rhel7cis_selinux_pol }}"
       state: enforcing
   when:
-    - rhel7cis_selinux_disable is defined
-    - not rhel7cis_selinux_disable
+    - rhel7cis_level2 is defined and rhel7cis_level2
+    - rhel7cis_selinux_disable is defined and not rhel7cis_selinux_disable
   tags:
       - level2
       - scored
@@ -593,8 +660,8 @@
       policy: "{{ rhel7cis_selinux_pol }}"
       state: enforcing
   when:
-    - rhel7cis_selinux_disable is defined
-    - not rhel7cis_selinux_disable
+    - rhel7cis_level2 is defined and rhel7cis_level2
+    - rhel7cis_selinux_disable is defined and not rhel7cis_selinux_disable
   tags:
       - level2
       - scored
@@ -606,6 +673,8 @@
   yum:
       name: setroubleshoot
       state: absent
+  when:
+    - rhel7cis_level2 is defined and rhel7cis_level2
   tags:
       - level2
       - scored
@@ -617,6 +686,8 @@
   yum:
       name: mcstrans
       state: absent
+  when:
+    - rhel7cis_level2 is defined and rhel7cis_level2
   tags:
       - level2
       - scored
@@ -627,6 +698,8 @@
   yum:
       name: libselinux
       state: present
+  when:
+    - rhel7cis_level2 is defined and rhel7cis_level2
   tags:
       - level2
       - scored
@@ -637,6 +710,8 @@
   template:
       src: etc/motd.j2
       dest: /etc/motd
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
       - level1
       - banner
@@ -647,6 +722,8 @@
   template:
       src: etc/issue.j2
       dest: /etc/issue
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
       - level1
       - patch
@@ -656,6 +733,8 @@
   template:
       src: etc/issue.net.j2
       dest: /etc/issue.net
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
       - level1
       - banner
@@ -669,6 +748,8 @@
       owner: root
       group: root
       mode: 0644
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
       - level1
       - perms
@@ -682,6 +763,8 @@
       owner: root
       group: root
       mode: 0644
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
       - level1
       - perms
@@ -695,6 +778,8 @@
       owner: root
       group: root
       mode: 0644
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
       - level1
       - perms
@@ -706,9 +791,10 @@
       msg: "Not currently implemented"
   #when: gdm_installed_audit.rc == '0' and gdm_login_banner_configured_audit
   changed_when: no
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
       - level1
-      - level2
       - patch
       - rule_1.7.2
 
@@ -717,10 +803,9 @@
       name: "*"
       state: latest
   when:
-    - rhel7cis_update is defined
-    - rhel7cis_update
+    - rhel7cis_level1 is defined and rhel7cis_level1
+    - rhel7cis_update is defined and rhel7cis_update
   tags:
       - level1
-      - level2
       - patch
       - rule_1.8
