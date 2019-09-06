@@ -5,7 +5,8 @@
     state: present
     reload: yes
     ignoreerrors: yes
-  when: 
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - rhel7cis_is_router is defined
     - not rhel7cis_is_router
   notify:
@@ -28,7 +29,8 @@
   with_items:
     - { name: net.ipv4.conf.all.send_redirects, value: 0 }
     - { name: net.ipv4.conf.default.send_redirects, value: 0 }
-  when: 
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - rhel7cis_is_router is defined
     - not rhel7cis_is_router
   notify:
@@ -53,6 +55,8 @@
     - { name: net.ipv4.conf.default.accept_source_route, value: 0 }
   notify:
     - sysctl flush ipv4 route table
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - level1
     - sysctl
@@ -72,6 +76,8 @@
     - { name: net.ipv4.conf.default.accept_redirects, value: 0 }
   notify:
     - sysctl flush ipv4 route table
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - level1
     - sysctl
@@ -92,6 +98,8 @@
     - { name: net.ipv4.conf.default.secure_redirects, value: 0 }
   notify:
     - sysctl flush ipv4 route table
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - level1
     - sysctl
@@ -112,6 +120,8 @@
     - { name: net.ipv4.conf.default.log_martians, value: 1 }
   notify:
     - sysctl flush ipv4 route table
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - level1
     - sysctl
@@ -128,6 +138,8 @@
     ignoreerrors: yes
   notify:
     - sysctl flush ipv4 route table
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - level1
     - sysctl
@@ -144,6 +156,8 @@
     ignoreerrors: yes
   notify:
     - sysctl flush ipv4 route table
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - level1
     - sysctl
@@ -164,6 +178,8 @@
     - { name: net.ipv4.conf.default.rp_filter, value: 1 }
   notify:
     - sysctl flush ipv4 route table
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - level1
     - sysctl
@@ -180,6 +196,8 @@
     ignoreerrors: yes
   notify:
     - sysctl flush ipv4 route table
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - level1
     - sysctl
@@ -199,6 +217,7 @@
     - { name: net.ipv6.conf.all.accept_ra, value: 0 }
     - { name: net.ipv6.conf.default.accept_ra, value: 0 }
   when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - rhel7cis_ipv6_required is defined
     - rhel7cis_ipv6_required
   notify:
@@ -222,6 +241,7 @@
     - { name: net.ipv6.conf.all.accept_redirects, value: 0 }
     - { name: net.ipv6.conf.default.accept_redirects, value: 0 }
   when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - rhel7cis_ipv6_required is defined
     - rhel7cis_ipv6_required
   notify:
@@ -240,6 +260,7 @@
     line: "options ipv6 disable=1"
     create: yes
   when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - rhel7cis_ipv6_required is defined
     - not rhel7cis_ipv6_required
   tags:
@@ -251,6 +272,8 @@
   yum:
     name: tcp_wrappers
     state: present
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - level1
     - patch
@@ -263,6 +286,8 @@
     owner: root
     group: root
     mode: 0644
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - level1
     - patch
@@ -274,6 +299,7 @@
     regexp: "^(#)?ALL"
     line: "ALL: ALL"
   when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - rhel7cis_enable_host_deny is defined
     - rhel7cis_enable_hosts_deny
   tags:
@@ -287,6 +313,8 @@
     owner: root
     group: root
     mode: 0644
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - level1
     - patch
@@ -298,6 +326,8 @@
     owner: root
     group: root
     mode: 0644
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - level1
     - patch
@@ -309,6 +339,8 @@
     regexp: "^(#)?install dccp(\\s|$)"
     line: "install dccp /bin/true"
     create: yes
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - level1
     - patch
@@ -320,6 +352,8 @@
     regexp: "^(#)?install sctp(\\s|$)"
     line: "install sctp /bin/true"
     create: yes
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - level1
     - patch
@@ -331,6 +365,8 @@
     regexp: "^(#)?install rds(\\s|$)"
     line: "install rds /bin/true"
     create: yes
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - level1
     - patch
@@ -342,6 +378,8 @@
     regexp: "^(#)?install tipc(\\s|$)"
     line: "install tipc /bin/true"
     create: yes
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - level1
     - patch
@@ -352,6 +390,7 @@
     name: firewalld
     state: present
   when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - rhel7cis_firewall is defined
     - rhel7cis_firewall == "firewalld"
   tags:
@@ -365,6 +404,7 @@
     state: stopped
     enabled: no
   when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - rhel7cis_firewall is defined
     - rhel7cis_firewall == "firewalld"
   tags:
@@ -377,6 +417,7 @@
     name: iptables
     state: present
   when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - rhel7cis_firewall is defined
     - rhel7cis_firewall == "iptables"
   tags:
@@ -392,6 +433,7 @@
     action: append
     state: present
   when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - rhel7cis_firewall is defined
     - rhel7cis_firewall == "iptables"
     - rhel7cis_firewall_default_deny_rule is defined and rhel7cis_firewall_default_deny_rule
@@ -409,6 +451,7 @@
     action: append
     state: present
   when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - rhel7cis_firewall is defined
     - rhel7cis_firewall == "iptables"
     - rhel7cis_firewall_default_deny_rule is defined and rhel7cis_firewall_default_deny_rule
@@ -426,6 +469,7 @@
     action: append
     state: present
   when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - rhel7cis_firewall is defined
     - rhel7cis_firewall == "iptables"
     - rhel7cis_firewall_default_deny_rule is defined and rhel7cis_firewall_default_deny_rule
@@ -444,6 +488,7 @@
     action: append
     state: present
   when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - rhel7cis_firewall is defined
     - rhel7cis_firewall == "iptables"
     - rhel7cis_firewall_loopback_rule is defined and rhel7cis_firewall_loopback_rule
@@ -462,6 +507,7 @@
     action: append
     state: present
   when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - rhel7cis_firewall is defined
     - rhel7cis_firewall == "iptables"
     - rhel7cis_firewall_loopback_rule is defined and rhel7cis_firewall_loopback_rule
@@ -480,6 +526,7 @@
     action: append
     state: present
   when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - rhel7cis_firewall is defined
     - rhel7cis_firewall == "iptables"
     - rhel7cis_firewall_loopback_rule is defined and rhel7cis_firewall_loopback_rule
@@ -498,6 +545,7 @@
     ctstate: NEW,ESTABLISHED
     jump: ACCEPT
   when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - rhel7cis_firewall is defined
     - rhel7cis_firewall == "iptables"
     - rhel7cis_firewall_outbound_rule is defined and rhel7cis_firewall_outbound_rule
@@ -516,6 +564,7 @@
     ctstate: NEW,ESTABLISHED
     jump: ACCEPT
   when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - rhel7cis_firewall is defined
     - rhel7cis_firewall == "iptables"
     - rhel7cis_firewall_outbound_rule is defined and rhel7cis_firewall_outbound_rule
@@ -534,6 +583,7 @@
     ctstate: NEW,ESTABLISHED
     jump: ACCEPT
   when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - rhel7cis_firewall is defined
     - rhel7cis_firewall == "iptables"
     - rhel7cis_firewall_outbound_rule is defined and rhel7cis_firewall_outbound_rule
@@ -552,6 +602,7 @@
     ctstate: ESTABLISHED
     jump: ACCEPT
   when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - rhel7cis_firewall is defined
     - rhel7cis_firewall == "iptables"
     - rhel7cis_firewall_outbound_rule is defined and rhel7cis_firewall_outbound_rule
@@ -570,6 +621,7 @@
     ctstate: ESTABLISHED
     jump: ACCEPT
   when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - rhel7cis_firewall is defined
     - rhel7cis_firewall == "iptables"
     - rhel7cis_firewall_outbound_rule is defined and rhel7cis_firewall_outbound_rule
@@ -588,6 +640,7 @@
     ctstate: ESTABLISHED
     jump: ACCEPT
   when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - rhel7cis_firewall is defined
     - rhel7cis_firewall == "iptables"
     - rhel7cis_firewall_outbound_rule is defined and rhel7cis_firewall_outbound_rule
@@ -600,7 +653,8 @@
 - name: "SCORED | 3.6.5 | PATCH | Ensure firewall rules exist for all open ports"
   debug:
     msg: "Ensure firewall rules exist for all open ports"
-  when: 
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - rhel7cis_firewall is defined
     - rhel7cis_firewall == "iptables"
   tags:
@@ -613,6 +667,8 @@
 - name: "NOTSCORED | 3.7 | PATCH | Ensure wireless interfaces are disabled"
   command: /bin/true
   changed_when: no
+  when:
+    - rhel7cis_level2 is defined and rhel7cis_level2
   tags:
     - level1
     - level2
