@@ -4,7 +4,7 @@
   fail:
     msg: "This role can only be run against RHEL 7. {{ ansible_distribution }} {{ ansible_distribution_major_version }} is not supported."
   when:
-    - ansible_distribution == 'RedHat'
+    - ansible_distribution|lower == 'redhat'
     - ansible_distribution_major_version is version_compare('7', '!=')
   tags:
     - always
@@ -13,7 +13,7 @@
   debug:
     msg: "PASS | This role can only be executed on Red Hat 7 operating systems"  
   when:
-    - ansible_distribution == 'RedHat'
+    - ansible_distribution|lower == 'redhat'
     - ansible_distribution_major_version is version_compare('7', '==')
   tags:
     - always
