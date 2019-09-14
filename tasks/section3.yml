@@ -5,6 +5,7 @@
     state: present
     reload: yes
     ignoreerrors: yes
+    sysctl_set: yes
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
     - rhel7cis_is_router is defined
@@ -136,6 +137,7 @@
     state: present
     reload: yes
     ignoreerrors: yes
+    sysctl_set: yes
   notify:
     - sysctl flush ipv4 route table
   when:
@@ -154,6 +156,7 @@
     state: present
     reload: yes
     ignoreerrors: yes
+    sysctl_set: yes
   notify:
     - sysctl flush ipv4 route table
   when:
@@ -194,6 +197,7 @@
     state: present
     reload: yes
     ignoreerrors: yes
+    sysctl_set: yes
   notify:
     - sysctl flush ipv4 route table
   when:
