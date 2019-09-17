@@ -40,8 +40,14 @@
     name: xinetd
     state: restarted
 
-- name: systemctl restart postfix
+- name: systemctl restart postfix | permissions fix
+  command: postfix -c /etc/postfix/ set-permissions
+  become: yes
+  listen: systemctl restart postfix
+
+- name: systemctl restart postfix | systemctl restart
   become: yes
   service:
     name: postfix
     state: restarted
+  listen: systemctl restart postfix
