@@ -297,7 +297,6 @@
 - name: "NOTSCORED | 1.1.20 | PATCH | Ensure noexec option set on removable media partitions"
   command: /bin/true
   changed_when: no
-  
   tags:
       - level1
       - notscored
@@ -316,16 +315,16 @@
 
 - name: "SCORED | 1.1.22 | PATCH | Disable Automounting"
   systemd:
-      name: autofs
-      enabled: no
+    name: autofs
+    enabled: no
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
     - rhel7cis_allow_autofs is defined and not rhel7cis_allow_autofs
     - autofs_service_status is defined and autofs_service_status.stdout == "loaded"
   tags:
-      - level1
-      - patch
-      - rule_1.1.22
+    - level1
+    - patch
+    - rule_1.1.22
 
 - name: "NOTSCORED | 1.2.1 | PATCH | Ensure package manager repositories are configured"
   command: /bin/true
@@ -333,52 +332,52 @@
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
-      - level1
-      - notscored
-      - patch
-      - rule_1.2.1
+    - level1
+    - notscored
+    - patch
+    - rule_1.2.1
 
 - name: "SCORED | 1.2.2 | PATCH | Ensure gpgcheck is globally activated"
   replace:
-      name: /etc/yum.conf
-      regexp: "^gpgcheck=0"
-      replace: "gpgcheck=1"
+    name: /etc/yum.conf
+    regexp: "^gpgcheck=0"
+    replace: "gpgcheck=1"
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
-      - level1
-      - scored
-      - patch
-      - rule_1.2.2
+    - level1
+    - scored
+    - patch
+    - rule_1.2.2
 
 - name: "SCORED | 1.2.2 | PATCH | Ensure gpgcheck is globally activated"
   find:
-      paths: /etc/yum.repos.d
-      patterns: "*.repo"
+    paths: /etc/yum.repos.d
+    patterns: "*.repo"
   register: yum_repos
   changed_when: no
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
-      - level1
-      - scored
-      - patch
-      - rule_1.2.2
+    - level1
+    - scored
+    - patch
+    - rule_1.2.2
 
 - name: "SCORED | 1.2.2 | PATCH | Ensure gpgcheck is globally activated"
   replace:
-      name: "{{ item.path }}"
-      regexp: "^gpgcheck=0"
-      replace: "gpgcheck=1"
+    name: "{{ item.path }}"
+    regexp: "^gpgcheck=0"
+    replace: "gpgcheck=1"
   with_items:
-      - "{{ yum_repos.files }}"
+    - "{{ yum_repos.files }}"
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
-      - level1
-      - scored
-      - patch
-      - rule_1.2.2
+    - level1
+    - scored
+    - patch
+    - rule_1.2.2
 
 - name: "NOTSCORED | 1.2.3 | PATCH | Ensure GPG keys are configured"
   command: /bin/true
@@ -450,24 +449,45 @@
 
 - name: "SCORED | 1.3.2 | PATCH | Ensure filesystem integrity is regularly checked"
   cron:
-      name: Run AIDE integrity check weekly
-      cron_file: "{{ rhel7cis_aide_cron['cron_file'] }}"
-      user: "{{ rhel7cis_aide_cron['cron_user'] }}"
-      minute: "{{ rhel7cis_aide_cron['aide_minute'] | default('0') }}"
-      hour: "{{ rhel7cis_aide_cron['aide_hour'] | default('5') }}"
-      day: "{{ rhel7cis_aide_cron['aide_day'] | default('*') }}"
-      month: "{{ rhel7cis_aide_cron['aide_month'] | default('*') }}"
-      weekday: "{{ rhel7cis_aide_cron['aide_weekday'] | default('*') }}"
-      job: "{{ rhel7cis_aide_cron['aide_job'] }}"
+    name: Run AIDE integrity check weekly
+    cron_file: "{{ rhel7cis_aide_cron['cron_file'] }}"
+    user: "{{ rhel7cis_aide_cron['cron_user'] }}"
+    minute: "{{ rhel7cis_aide_cron['aide_minute'] | default('0') }}"
+    hour: "{{ rhel7cis_aide_cron['aide_hour'] | default('5') }}"
+    day: "{{ rhel7cis_aide_cron['aide_day'] | default('*') }}"
+    month: "{{ rhel7cis_aide_cron['aide_month'] | default('*') }}"
+    weekday: "{{ rhel7cis_aide_cron['aide_weekday'] | default('*') }}"
+    job: "{{ rhel7cis_aide_cron['aide_job'] }}"
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
-      - level1
-      - scored
-      - aide
-      - file_integrity
-      - patch
-      - rule_1.3.2
+    - level1
+    - scored
+    - aide
+    - file_integrity
+    - patch
+    - rule_1.3.2
+
+- name: "SCORED | 1.3.2 | PATCH | Ensure filesystem integrity is regularly checked"
+  cron:
+    name: Run AIDE integrity check weekly
+    cron_file: "/var/spool/cron/root"
+    user: "{{ rhel7cis_aide_cron['cron_user'] }}"
+    minute: "{{ rhel7cis_aide_cron['aide_minute'] | default('0') }}"
+    hour: "{{ rhel7cis_aide_cron['aide_hour'] | default('5') }}"
+    day: "{{ rhel7cis_aide_cron['aide_day'] | default('*') }}"
+    month: "{{ rhel7cis_aide_cron['aide_month'] | default('*') }}"
+    weekday: "{{ rhel7cis_aide_cron['aide_weekday'] | default('*') }}"
+    job: "{{ rhel7cis_aide_cron['aide_job'] }}"
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
+  tags:
+    - level1
+    - scored
+    - aide
+    - file_integrity
+    - patch
+    - rule_1.3.2
 
 - name: "SCORED | 1.4.1 | PATCH | Ensure permissions on bootloader config are configured"
   stat:

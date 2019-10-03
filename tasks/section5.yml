@@ -299,10 +299,76 @@
 
 - name: "SCORED | 5.2.12 | PATCH | Ensure SSH Idle Timeout Interval is configured"
   lineinfile:
+    state: absent
+    dest: /etc/ssh/sshd_config
+    regexp: '^ClientAliveInterval (?!300)'
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
+  tags:
+    - level1
+    - patch
+    - rule_5.2.12
+
+- name: "SCORED | 5.2.12 | PATCH | Ensure SSH Idle Timeout Interval is configured"
+  lineinfile:
     state: present
     dest: /etc/ssh/sshd_config
-    regexp: '^ClientAliveInterval'
+    regexp: '^ClientAliveInterval(.*)?$'
     line: 'ClientAliveInterval 300'
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
+  tags:
+    - level1
+    - patch
+    - rule_5.2.12
+
+- name: "SCORED | 5.2.12 | PATCH | Ensure SSH Idle Timeout Interval is configured"
+  replace:
+    dest: /etc/ssh/sshd_config
+    regexp: '^ClientAliveInterval(.*)?$'
+    replace: 'ClientAliveInterval 300'
+    backup: yes
+  ignore_errors: yes
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
+  tags:
+    - level1
+    - patch
+    - rule_5.2.12
+
+- name: "SCORED | 5.2.12 | PATCH | Ensure SSH Idle Timeout Interval is configured"
+  lineinfile:
+    state: absent
+    dest: /etc/ssh/sshd_config
+    regexp: '^ClientAliveCountMax (?!0)'
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
+  tags:
+    - level1
+    - patch
+    - rule_5.2.12
+
+
+- name: "SCORED | 5.2.12 | PATCH | Ensure SSH Idle Timeout Interval is configured"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: '^ClientAliveCountMax(.*)?$'
+    line: 'ClientAliveCountMax 0'
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
+  tags:
+    - level1
+    - patch
+    - rule_5.2.12
+
+- name: "SCORED | 5.2.12 | PATCH | Ensure SSH Idle Timeout Interval is configured"
+  replace:
+    dest: /etc/ssh/sshd_config
+    regexp: '^ClientAliveCountMax(.*)?$'
+    replace: 'ClientAliveCountMax 0'
+    backup: yes
+  ignore_errors: yes
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
@@ -338,7 +404,7 @@
     state: present
     dest: /etc/ssh/sshd_config
     regexp: '^Banner'
-    line: 'Banner /etc/issue'
+    line: 'Banner /etc/issue.net'
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
@@ -632,6 +698,7 @@
     owner: root
     group: root
     mode: 0700
+  changed_when: no
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
     - rhel7cis_ensure_system_accounts_are_non_login is defined and rhel7cis_ensure_system_accounts_are_non_login
@@ -655,12 +722,12 @@
     - low
 
 - name: "SCORED | 5.4.2 | PATCH | Ensure system accounts are non-login"
-  copy:
-    src: scripts/five_four_two.sh
-    dest: /opt/five_four_two.sh
+  file:
+    path: /opt/five_four_two.sh
     owner: root
     group: root
     state: absent
+  changed_when: no
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
     - rhel7cis_ensure_system_accounts_are_non_login is defined and rhel7cis_ensure_system_accounts_are_non_login

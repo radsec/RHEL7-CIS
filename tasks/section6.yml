@@ -266,18 +266,18 @@
     - level1
     - low
 
-- name: "SCORED | 6.2.6 | PATCH | Ensure root PATH Integrity"
-  debug:
-    var: root_path_integrity.stdout_lines
-  when:
-    - rhel7cis_level1 is defined and rhel7cis_level1
-    - root_path_integrity is defined
-    - root_path_integrity.stdout != ""
-  tags:
-    - rule_6.2.6
-    - low
-    - level1
-    - low
+# - name: "SCORED | 6.2.6 | PATCH | Ensure root PATH Integrity"
+#   debug:
+#     var: root_path_integrity.stdout_lines
+#   when:
+#     - rhel7cis_level1 is defined and rhel7cis_level1
+#     - root_path_integrity is defined
+#     - root_path_integrity.stdout != ""
+#   tags:
+#     - rule_6.2.6
+#     - low
+#     - level1
+#     - low
 
 - name: "SCORED | 6.2.6 | PATCH | Ensure root PATH Integrity"
   debug:
@@ -336,18 +336,18 @@
     - level1
     - low
 
-- name: "SCORED | 6.2.7 | PATCH | Ensure all users' home directories exist"
-  debug:
-    var: home_directories_exist.stdout_lines
-  when:
-    - rhel7cis_level1 is defined and rhel7cis_level1
-    - home_directories_exist is defined
-    - home_directories_exist.stdout != ""
-  tags:
-    - rule_6.2.7
-    - low
-    - level1
-    - low
+# - name: "SCORED | 6.2.7 | PATCH | Ensure all users' home directories exist"
+#   debug:
+#     var: home_directories_exist.stdout_lines
+#   when:
+#     - rhel7cis_level1 is defined and rhel7cis_level1
+#     - home_directories_exist is defined
+#     - home_directories_exist.stdout != ""
+#   tags:
+#     - rule_6.2.7
+#     - low
+#     - level1
+#     - low
 
 - name: "SCORED | 6.2.7 | PATCH | Ensure all users' home directories exist"
   debug:
@@ -410,18 +410,18 @@
     - patch
     - low
 
-- name: "SCORED | 6.2.8 | PATCH | Ensure users' home directories permissions are 750 or more restrictive"
-  debug:
-    var: home_directories_permissions.stdout_lines
-  when:
-    - rhel7cis_level1 is defined and rhel7cis_level1
-    - rhel7cis_modify_user_homes is defined and home_directories_permissions is defined
-    - rhel7cis_modify_user_homes
-  tags:
-    - rule_6.2.8
-    - level1
-    - patch
-    - low
+# - name: "SCORED | 6.2.8 | PATCH | Ensure users' home directories permissions are 750 or more restrictive"
+#   debug:
+#     var: home_directories_permissions.stdout_lines
+#   when:
+#     - rhel7cis_level1 is defined and rhel7cis_level1
+#     - rhel7cis_modify_user_homes is defined and home_directories_permissions is defined
+#     - rhel7cis_modify_user_homes
+#   tags:
+#     - rule_6.2.8
+#     - level1
+#     - patch
+#     - low
 
 - name: "SCORED | 6.2.8 | PATCH | Ensure users' home directories permissions are 750 or more restrictive"
   debug:
@@ -475,6 +475,7 @@
   args:
     executable: /bin/bash
   register: home_directories_own
+  no_log: yes
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
@@ -483,15 +484,15 @@
     - patch
     - low
 
-- name: "SCORED | 6.2.9 | PATCH | Ensure users own their home directories"
-  debug:
-    var: home_directories_own.stdout_lines
-  when:
-    - rhel7cis_level1 is defined and rhel7cis_level1
-  tags:
-    - rule_6.2.9
-    - level1
-    - patch
+# - name: "SCORED | 6.2.9 | PATCH | Ensure users own their home directories"
+#   debug:
+#     var: home_directories_own.stdout_lines
+#   when:
+#     - rhel7cis_level1 is defined and rhel7cis_level1
+#   tags:
+#     - rule_6.2.9
+#     - level1
+#     - patch
 
 - name: "SCORED | 6.2.9 | PATCH | Ensure users own their home directories"
   debug:
@@ -541,6 +542,7 @@
   args:
     executable: /bin/bash
   register: user_dot_files
+  no_log: yes
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
@@ -549,16 +551,16 @@
     - level1
     - low
 
-- name: "SCORED | 6.2.10 | PATCH | Ensure users' dot files are not group or world writable"
-  debug:
-    var: user_dot_files.stdout_lines
-  when:
-    - rhel7cis_level1 is defined and rhel7cis_level1
-  tags:
-    - rule_6.2.10
-    - level1
-    - patch
-    - low
+# - name: "SCORED | 6.2.10 | PATCH | Ensure users' dot files are not group or world writable"
+#   debug:
+#     var: user_dot_files.stdout_lines
+#   when:
+#     - rhel7cis_level1 is defined and rhel7cis_level1
+#   tags:
+#     - rule_6.2.10
+#     - level1
+#     - patch
+#     - low
 
 - name: "SCORED | 6.2.10 | PATCH | Ensure users' dot files are not group or world writable"
   debug:
@@ -593,6 +595,7 @@
     state: absent
     dest: "~{{ item }}/.forward"
   with_items: "{{ users.stdout_lines }}"
+  no_log: yes
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
@@ -606,6 +609,7 @@
     state: absent
     dest: "~{{ item }}/.netrc"
   with_items: "{{ users.stdout_lines }}"
+  no_log: yes
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
@@ -635,6 +639,7 @@
   args:
     executable: /bin/bash
   register: dot_netrc_files
+  no_log: yes
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
@@ -643,16 +648,16 @@
     - level1
     - low
 
-- name: "SCORED | 6.2.13 | PATCH | Ensure users' .netrc files are not group or world accessible"
-  debug:
-    var: dot_netrc_files.stdout_lines
-  when:
-    - rhel7cis_level1 is defined and rhel7cis_level1
-  tags:
-    - rule_6.2.13
-    - patch
-    - level1
-    - low
+# - name: "SCORED | 6.2.13 | PATCH | Ensure users' .netrc files are not group or world accessible"
+#   debug:
+#     var: dot_netrc_files.stdout_lines
+#   when:
+#     - rhel7cis_level1 is defined and rhel7cis_level1
+#   tags:
+#     - rule_6.2.13
+#     - patch
+#     - level1
+#     - low
 
 - name: "SCORED | 6.2.13 | PATCH | Ensure users' .netrc files are not group or world accessible"
   debug:
@@ -687,6 +692,7 @@
     state: absent
     dest: "~{{ item }}/.rhosts"
   with_items: "{{ users.stdout_lines }}"
+  no_log: yes
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
@@ -716,6 +722,7 @@
   args:
     executable: /bin/bash
   register: check_groups_in_passwd
+  no_log: yes
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
@@ -724,16 +731,16 @@
     - level1
     - low
 
-- name: "SCORED | 6.2.15 | PATCH | Ensure all groups in /etc/passwd exist in /etc/group"
-  debug:
-    var: check_groups_in_passwd.stdout_lines
-  when:
-    - rhel7cis_level1 is defined and rhel7cis_level1
-  tags:
-    - rule_6.2.15
-    - patch
-    - level1
-    - low
+# - name: "SCORED | 6.2.15 | PATCH | Ensure all groups in /etc/passwd exist in /etc/group"
+#   debug:
+#     var: check_groups_in_passwd.stdout_lines
+#   when:
+#     - rhel7cis_level1 is defined and rhel7cis_level1
+#   tags:
+#     - rule_6.2.15
+#     - patch
+#     - level1
+#     - low
 
 - name: "SCORED | 6.2.15 | PATCH | Ensure all groups in /etc/passwd exist in /etc/group"
   debug:
@@ -783,6 +790,7 @@
   args:
     executable: /bin/bash
   register: duplicate_uids
+  no_log: yes
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
@@ -791,16 +799,16 @@
     - level1
     - low
 
-- name: "SCORED | 6.2.16 | PATCH | Ensure no duplicate UIDs exist"
-  debug:
-    var: duplicate_uids.stdout_lines
-  when:
-    - rhel7cis_level1 is defined and rhel7cis_level1
-  tags:
-    - rule_6.2.16
-    - patch
-    - level1
-    - low
+# - name: "SCORED | 6.2.16 | PATCH | Ensure no duplicate UIDs exist"
+#   debug:
+#     var: duplicate_uids.stdout_lines
+#   when:
+#     - rhel7cis_level1 is defined and rhel7cis_level1
+#   tags:
+#     - rule_6.2.16
+#     - patch
+#     - level1
+#     - low
 
 - name: "SCORED | 6.2.16 | PATCH | Ensure no duplicate UIDs exist"
   debug:
@@ -852,6 +860,7 @@
     executable: /bin/bash
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
+  no_log: yes
   register: duplicate_gids
   tags:
     - rule_6.2.17
@@ -859,16 +868,16 @@
     - level1
     - low
 
-- name: "SCORED | 6.2.17 | PATCH | Ensure no duplicate GIDs exist"
-  debug:
-    var: duplicate_gids.stdout_lines
-  when:
-    - rhel7cis_level1 is defined and rhel7cis_level1
-  tags:
-    - rule_6.2.17
-    - patch
-    - level1
-    - low
+# - name: "SCORED | 6.2.17 | PATCH | Ensure no duplicate GIDs exist"
+#   debug:
+#     var: duplicate_gids.stdout_lines
+#   when:
+#     - rhel7cis_level1 is defined and rhel7cis_level1
+#   tags:
+#     - rule_6.2.17
+#     - patch
+#     - level1
+#     - low
 
 - name: "SCORED | 6.2.17 | PATCH | Ensure no duplicate GIDs exist"
   debug:
@@ -919,6 +928,7 @@
   args:
     executable: /bin/bash
   register: duplicate_users
+  no_log: yes
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
@@ -927,16 +937,16 @@
     - level1
     - low
 
-- name: "SCORED | 6.2.18 | PATCH | Ensure no duplicate user names exist"
-  debug:
-    var: duplicate_users.stdout_lines
-  when:
-    - rhel7cis_level1 is defined and rhel7cis_level1
-  tags:
-    - rule_6.2.18
-    - patch
-    - level1
-    - low
+# - name: "SCORED | 6.2.18 | PATCH | Ensure no duplicate user names exist"
+#   debug:
+#     var: duplicate_users.stdout_lines
+#   when:
+#     - rhel7cis_level1 is defined and rhel7cis_level1
+#   tags:
+#     - rule_6.2.18
+#     - patch
+#     - level1
+#     - low
 
 - name: "SCORED | 6.2.18 | PATCH | Ensure no duplicate user names exist"
   debug:
@@ -987,6 +997,7 @@
   args:
     executable: /bin/bash
   register: duplicate_groups
+  no_log: yes
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
@@ -995,16 +1006,16 @@
     - level1
     - low
 
-- name: "SCORED | 6.2.19 | PATCH | Ensure no duplicate group names exist"
-  debug:
-    var: duplicate_groups.stdout_lines
-  when:
-    - rhel7cis_level1 is defined and rhel7cis_level1
-  tags:
-    - rule_6.2.19
-    - patch
-    - level1
-    - low
+# - name: "SCORED | 6.2.19 | PATCH | Ensure no duplicate group names exist"
+#   debug:
+#     var: duplicate_groups.stdout_lines
+#   when:
+#     - rhel7cis_level1 is defined and rhel7cis_level1
+#   tags:
+#     - rule_6.2.19
+#     - patch
+#     - level1
+#     - low
 
 - name: "SCORED | 6.2.19 | PATCH | Ensure no duplicate group names exist"
   debug:
