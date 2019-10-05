@@ -1,5 +1,21 @@
 ---
 # tasks file for RHEL7-CIS
+- name: "Check if the host is reachable"
+  ping:
+  delegate_to: localhost
+  vars:
+    ansible_become: no
+  register: ping_status
+  ignore_errors: yes
+  tags:
+    - always
+
+- name: "Group reachable hosts"
+  group_by: key=reachable
+  when: ping_status is success
+  tags:
+    - always
+
 - name: "Check OS version and family"
   fail:
     msg: "FAIL | This role can only be executed on Red Hat 7 operating systems. {{ ansible_distribution }} {{ ansible_distribution_major_version }} is not supported."
