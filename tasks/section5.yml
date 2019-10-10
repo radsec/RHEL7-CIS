@@ -387,12 +387,9 @@
   pamd:
     name: '{{item}}'
     type: auth
-    control: required
-    module_path: pam_faillock.so
-    new_type: auth
+    control: sufficient
+    module_path: pam_unix.so
     new_control: '[success=1 default=bad]'
-    new_module_path: pam_unix.so
-    state: after
   ignore_errors: yes
   loop:
     - system-auth
@@ -409,9 +406,50 @@
   pamd:
     name: '{{item}}'
     type: auth
-    control: required
+    control: '[success=1 default=bad]'
     module_path: pam_unix.so
-    module_arguments: '[success=1 default=bad]'
+    state: updated
+  ignore_errors: yes
+  loop:
+    - system-auth
+    - password-auth
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
+  tags:
+    - level1
+    - patch
+    - rule_5.3.2
+    - low
+
+# - name: "SCORED | 5.3.2 | Ensure lockout for failed password attempts is configured"
+#   pamd:
+#     name: '{{item}}'
+#     type: auth
+#     control: required
+#     module_path: pam_faillock.so
+#     new_type: auth
+#     new_control: '[success=1 default=bad]'
+#     new_module_path: pam_unix.so
+#     state: after
+#   ignore_errors: yes
+#   loop:
+#     - system-auth
+#     - password-auth
+#   when:
+#     - rhel7cis_level1 is defined and rhel7cis_level1
+#   tags:
+#     - level1
+#     - patch
+#     - rule_5.3.2
+#     - low
+
+- name: "SCORED | 5.3.2 | Ensure lockout for failed password attempts is configured"
+  pamd:
+    name: '{{item}}'
+    type: auth
+    control: sufficient
+    module_path: pam_faillock.so
+    module_arguments: preauth audit silent deny=5 unlock_time=900
     state: args_present
   ignore_errors: yes
   loop:
@@ -455,7 +493,7 @@
     control: '[default=die]'
     module_path: pam_faillock.so
     module_arguments: authfail audit deny=5 unlock_time=900
-    state: args_present
+    state: updated
   ignore_errors: yes
   loop:
     - system-auth
@@ -476,6 +514,9 @@
     module_path: pam_unix.so
     module_arguments: authfail audit deny=5 unlock_time=900
     state: args_present
+  loop:
+    - system-auth
+    - password-auth
   ignore_errors: yes
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
@@ -497,6 +538,9 @@
     module_arguments: authsucc audit deny=5 unlock_time=900
     state: after
   ignore_errors: yes
+  loop:
+    - system-auth
+    - password-auth
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
@@ -514,6 +558,9 @@
     module_arguments: authsucc audit deny=5 unlock_time=900
     state: args_present
   ignore_errors: yes
+  loop:
+    - system-auth
+    - password-auth
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
