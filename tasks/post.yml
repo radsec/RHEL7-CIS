@@ -5,3 +5,6 @@
   command: yum -y autoremove
   changed_when: no
   ignore_errors: yes
+
+- meta: clear_host_errors
+  when: ignore_unreachable is defined and ignore_unreachable
