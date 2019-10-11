@@ -588,6 +588,7 @@
 # END # auth [success=1 default=bad] pam_unix.so #
 
 # START # auth [default=die] pam_faillock.so authfail audit deny=5 unlock_time=900 #
+
 - name: "SCORED | 5.3.2 | Ensure lockout for failed password attempts is configured"
   pamd:
     name: '{{item}}'
@@ -639,26 +640,6 @@
     name: '{{ item }}'
     type: auth
     control: '[default=die]'
-    module_path: pam_faillock.so
-    module_arguments: authfail audit deny=5 unlock_time=900
-    state: args_present
-  ignore_errors: yes
-  loop:
-    - system-auth
-    - password-auth
-  when:
-    - rhel7cis_level1 is defined and rhel7cis_level1
-  tags:
-    - level1
-    - patch
-    - rule_5.3.2
-    - low
-
-- name: "SCORED | 5.3.2 | Ensure lockout for failed password attempts is configured"
-  pamd:
-    name: '{{ item }}'
-    type: auth
-    control: sufficient
     module_path: pam_faillock.so
     module_arguments: authfail audit deny=5 unlock_time=900
     state: args_present
@@ -1005,14 +986,35 @@
 
 # OLD # END #
 
-- name: "SCORED | 5.3.4 | PATCH | Ensure password hashing algorithm is SHA-512"
-  command: authconfig --passalgo=sha512 --update
+# START # password sufficient pam_unix.so sha512 #
+
+- name: 'SCORED | 5.3.4 | PATCH | Ensure password hashing algorithm is SHA-512'
+  pamd:
+    name: '{{ item }}'
+    type: password
+    control: sufficient
+    module_path: 'pam_unix.so'
+    module_arguments: 'sha512'
+    state: args_present
+  ignore_errors: yes
+  loop:
+    - system-auth
+    - password-auth
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-  tags:
-    - level1
-    - patch
-    - rule_5.3.4
+
+# END # password sufficient pam_unix.so sha512 #
+
+# OLD # START #
+# - name: "SCORED | 5.3.4 | PATCH | Ensure password hashing algorithm is SHA-512"
+#   command: authconfig --passalgo=sha512 --update
+#   when:
+#     - rhel7cis_level1 is defined and rhel7cis_level1
+#   tags:
+#     - level1
+#     - patch
+#     - rule_5.3.4
+# OLD # END #
 
 - name: "SCORED | 5.4.1.1 | PATCH | Ensure password expiration is 365 days or less"
   lineinfile:
