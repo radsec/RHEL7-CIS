@@ -1,0 +1,14 @@
+---
+- hosts:  all
+  become: yes
+  become_method: sudo
+  gather_facts: true
+  ignore_errors: true
+  ignore_unreachable: true
+  vars:
+    ignore_errors: true
+    ignore_unreachable: true
+    rhel7cis_level1: true
+    rhel7cis_level2: false
+  roles:
+    - role: CIS_rhel7_Benchmark
