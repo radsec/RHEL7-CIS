@@ -3,6 +3,9 @@
   become: yes
   become_method: sudo
   gather_facts: true
+  vars:
+    ignore_errors: true
+    ignore_unreachable: true
   roles:
 # Match role folder name here - RHEL7-CIS
     - role: RHEL7-CIS

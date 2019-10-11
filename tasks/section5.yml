@@ -435,6 +435,7 @@
 # auth required pam_faillock.so preauth audit silent deny=5 unlock_time=900
 # auth [default=die] pam_faillock.so authfail audit deny=5 unlock_time=900
 
+
 # START # auth required pam_faillock.so preauth audit silent deny=5 unlock_time=900 #
 
 - name: "SCORED | 5.3.2 | Ensure lockout for failed password attempts is configured"
@@ -519,6 +520,7 @@
   loop:
     - system-auth
     - password-auth
+
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
@@ -1001,6 +1003,11 @@
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
     - system_auth_password_check_pam_unix.rc is defined and system_auth_password_check_pam_unix.rc == 0
+  tags:
+     - level1
+     - patch
+     - rule_5.3.3
+     - low
 
 - name: 'SCORED | 5.3.3 | Ensure password reuse is limited'
   pamd:
@@ -1017,6 +1024,11 @@
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
     - system_auth_password_check_pam_pwhistory.rc is defined and system_auth_password_check_pam_pwhistory.rc == 0
+  tags:
+     - level1
+     - patch
+     - rule_5.3.3
+     - low
 
 # END # password sufficient pam_unix.so remember=5 #
 
@@ -1073,6 +1085,10 @@
     - password-auth
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
+  tags:
+     - level1
+     - patch
+     - rule_5.3.4
 
 # END # password sufficient pam_unix.so sha512 #
 
