@@ -396,8 +396,8 @@
     - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - level1
-      - patch
-      - rule_5.2.14
+    - patch
+    - rule_5.2.14
 
 - name: "SCORED | 5.2.15 | PATCH | Ensure SSH warning banner is configured"
   lineinfile:
@@ -484,7 +484,7 @@
 
 # START # auth [success=1 default=bad] pam_unix.so #
 
-- name: 'SCORED | 5.3.2 | Ensure lockout for failed password attempts is configured'
+- name: 'SCORED | 5.3.2 | Ensure lockout for failed password attempts is configured - pam_unix.so'
   pamd:
     name: '{{ item }}'
     type: auth
@@ -503,7 +503,7 @@
     - rule_5.3.2
     - low
 
-- name: 'SCORED | 5.3.2 | Ensure lockout for failed password attempts is configured'
+- name: 'SCORED | 5.3.2 | Ensure lockout for failed password attempts is configured - pam_unix.so'
   pamd:
     name: '{{ item }}'
     type: auth
@@ -526,7 +526,7 @@
     - rule_5.3.2
     - low
 
-- name: 'SCORED | 5.3.2 | Ensure lockout for failed password attempts is configured'
+- name: 'SCORED | 5.3.2 | Ensure lockout for failed password attempts is configured - pam_unix.so'
   pamd:
     name: '{{item}}'
     type: auth
@@ -546,7 +546,7 @@
     - rule_5.3.2
     - low
 
-- name: 'SCORED | 5.3.2 | Ensure lockout for failed password attempts is configured'
+- name: 'SCORED | 5.3.2 | Ensure lockout for failed password attempts is configured - pam_unix.so'
   pamd:
     name: '{{item}}'
     type: auth
@@ -566,7 +566,7 @@
     - rule_5.3.2
     - low
 
-# - name: 'SCORED | 5.3.2 | Ensure lockout for failed password attempts is configured'
+# - name: 'SCORED | 5.3.2 | Ensure lockout for failed password attempts is configured - Removal - pam_unix.so'
 #   pamd:
 #     name: '{{ item }}'
 #     type: auth
@@ -879,15 +879,15 @@
 #     - low
 # END # OLD #
 
-- name: "SCORED | 5.3.3 | Ensure password reuse is limited | password-auth"
-  pamd:
-    name: password-auth
-    type: password
-    control: sufficient
-    module_path: pam_pwhistory.so
-    module_arguments: 'remember=5'
-    state: updated
+# START # password sufficient pam_unix.so remember=5 #
+# Determine if pam_unix.so or pam_pwhistory.so should be utilized
+- name: 'SCORED | 5.3.3 | Ensure password reuse is limited'
+  shell: 'grep -q "^password\s*sufficient\s*pam_unix\.so" /etc/pam.d/system-auth'
+  register: system_auth_password_check_pam_unix
+  failed_when: 'system_auth_password_check_pam_unix.rc > 1'
+  changed_when: false
   ignore_errors: yes
+  become: yes
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
@@ -896,15 +896,13 @@
     - rule_5.3.3
     - low
 
-- name: "SCORED | 5.3.3 | Ensure password reuse is limited | system-auth"
-  pamd:
-    name: system-auth
-    type: password
-    control: sufficient
-    module_path: pam_pwhistory.so
-    module_arguments: 'remember=5'
-    state: updated
+- name: 'SCORED | 5.3.3 | Ensure password reuse is limited'
+  shell: 'grep -q "^password\s+required\s+pam_pwhistory\.so" /etc/pam.d/system-auth'
+  register: system_auth_password_check_pam_pwhistory
+  failed_when: 'system_auth_password_check_pam_pwhistory.rc > 1'
+  changed_when: false
   ignore_errors: yes
+  become: yes
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
@@ -912,6 +910,100 @@
     - patch
     - rule_5.3.3
     - low
+
+# START # DEBUG STATEMENTS #
+# - debug:
+#     var: system_auth_password_check_pam_unix
+#   when:
+#     - rhel7cis_level1 is defined and rhel7cis_level1
+#   tags:
+#     - level1
+#     - patch
+#     - rule_5.3.3
+#     - low
+
+
+# - debug:
+#     var: system_auth_password_check_pam_pwhistory
+#   when:
+#     - rhel7cis_level1 is defined and rhel7cis_level1
+#   tags:
+#     - level1
+#     - patch
+#     - rule_5.3.3
+#     - low
+# END # DEBUG STATEMENTS #
+
+- name: 'SCORED | 5.3.3 | Ensure password reuse is limited'
+  pamd:
+    name: '{{ item }}'
+    type: password
+    control: sufficient
+    module_path: 'pam_unix.so'
+    module_arguments: 'remember=5'
+    state: args_present
+  ignore_errors: yes
+  loop:
+    - system-auth
+    - password-auth
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
+    - system_auth_password_check_pam_unix.rc is defined and system_auth_password_check_pam_unix.rc == 0
+
+- name: 'SCORED | 5.3.3 | Ensure password reuse is limited'
+  pamd:
+    name: '{{ item }}'
+    type: password
+    control: required
+    module_path: 'pam_pwhistory.so'
+    module_arguments: 'remember=5'
+    state: args_present
+  ignore_errors: yes
+  loop:
+    - system-auth
+    - password-auth
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
+    - system_auth_password_check_pam_pwhistory.rc is defined and system_auth_password_check_pam_pwhistory.rc == 0
+
+# END # password sufficient pam_unix.so remember=5 #
+
+# OLD # START #
+# - name: "SCORED | 5.3.3 | Ensure password reuse is limited | password-auth"
+#   pamd:
+#     name: password-auth
+#     type: password
+#     control: sufficient
+#     module_path: pam_pwhistory.so
+#     module_arguments: 'remember=5'
+#     state: updated
+#   ignore_errors: yes
+#   when:
+#     - rhel7cis_level1 is defined and rhel7cis_level1
+#   tags:
+#     - level1
+#     - patch
+#     - rule_5.3.3
+#     - low
+
+# - name: "SCORED | 5.3.3 | Ensure password reuse is limited | system-auth"
+#   pamd:
+#     name: system-auth
+#     type: password
+#     control: sufficient
+#     module_path: pam_pwhistory.so
+#     module_arguments: 'remember=5'
+#     state: updated
+#   ignore_errors: yes
+#   when:
+#     - rhel7cis_level1 is defined and rhel7cis_level1
+#   tags:
+#     - level1
+#     - patch
+#     - rule_5.3.3
+#     - low
+
+# OLD # END #
 
 - name: "SCORED | 5.3.4 | PATCH | Ensure password hashing algorithm is SHA-512"
   command: authconfig --passalgo=sha512 --update
