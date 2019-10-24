@@ -253,8 +253,7 @@
   tags:
     - level1
     - scored
-    - patch
-    - rhel7cis_disable_service_checks is defined and rhel7cis_disable_service_checks 
+    - patch 
     - rule_2.1.6
 
 - name: "SCORED | 2.1.7 | PATCH | Ensure xinetd is not enabled"
@@ -269,7 +268,6 @@
   tags:
     - level1
     - patch
-    - rhel7cis_disable_service_checks is defined and rhel7cis_disable_service_checks 
     - scored
     - rule_2.1.7
 
@@ -426,7 +424,7 @@
       state: absent
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-    - (not rhel7cis_xwindows_required)
+    - rhel7cis_xwindows_required is defined and not rhel7cis_xwindows_required
     - rhel7cis_disable_service_checks is defined and rhel7cis_disable_service_checks
   with_items:
     - "@X Window System"
@@ -446,7 +444,7 @@
     enabled: no
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-    - (not rhel7cis_avahi_server and avahi_service_status.stdout == "loaded")
+    - rhel7cis_avahi_server is defined and (not rhel7cis_avahi_server and avahi_service_status.stdout == "loaded")
     - rhel7cis_disable_service_checks is defined and rhel7cis_disable_service_checks
   tags:
     - level1
@@ -464,7 +462,7 @@
       enabled: no
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-    - (not rhel7cis_cups_server and cups_service_status.stdout == "loaded")
+    - rhel7cis_cups_server is defined and (not rhel7cis_cups_server and cups_service_status.stdout == "loaded")
     - rhel7cis_disable_service_checks is defined and rhel7cis_disable_service_checks  
   tags:
       - level1
@@ -482,7 +480,7 @@
       enabled: no
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-    - (not rhel7cis_dhcp_server and dhcpd_service_status.stdout == "loaded")
+    - rhel7cis_dhcp_server is defined and (not rhel7cis_dhcp_server and dhcpd_service_status.stdout == "loaded")
     - rhel7cis_disable_service_checks is defined and rhel7cis_disable_service_checks
   tags:
       - level1
@@ -500,7 +498,7 @@
       enabled: no
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-    - (not rhel7cis_ldap_server and slapd_service_status.stdout == "loaded")
+    - rhel7cis_ldap_server is defined and (not rhel7cis_ldap_server and slapd_service_status.stdout == "loaded")
     - rhel7cis_disable_service_checks is defined and rhel7cis_disable_service_checks
   tags:
       - level1
@@ -518,7 +516,7 @@
       enabled: no
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-    - (not rhel7cis_nfs_rpc_server and nfs_service_status.stdout == "loaded")
+    - rhel7cis_nfs_rpc_server is defined and (not rhel7cis_nfs_rpc_server and nfs_service_status.stdout == "loaded")
     - rhel7cis_disable_service_checks is defined and rhel7cis_disable_service_checks
   tags:
       - level1
@@ -537,7 +535,7 @@
       enabled: no
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-    - (notrhel7cis_nfs_rpc_server and rpcbind_service_status.stdout == "loaded")
+    - rhel7cis_nfs_rpc_server is defined and (not rhel7cis_nfs_rpc_server and rpcbind_service_status.stdout == "loaded")
     - rhel7cis_disable_service_checks is defined and rhel7cis_disable_service_checks
   tags:
       - level1
@@ -556,7 +554,7 @@
       enabled: no
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-    - (not rhel7cis_named_server and named_service_status.stdout == "loaded")
+    - rhel7cis_named_server is defined and (not rhel7cis_named_server and named_service_status.stdout == "loaded")
     - rhel7cis_disable_service_checks is defined and rhel7cis_disable_service_checks
   tags:
       - level1
@@ -571,7 +569,7 @@
       enabled: no
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-    - (not rhel7cis_vsftpd_server and vsftpd_service_status.stdout == "loaded")
+    - rhel7cis_vsftpd_server is defined and (not rhel7cis_vsftpd_server and vsftpd_service_status.stdout == "loaded")
     - rhel7cis_disable_service_checks is defined and rhel7cis_disable_service_checks
   tags:
       - level1
@@ -586,7 +584,7 @@
       enabled: no
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-    - (not rhel7cis_httpd_server and httpd_service_status.stdout == "loaded")
+    - rhel7cis_httpd_server is defined and (not rhel7cis_httpd_server and httpd_service_status.stdout == "loaded")
     - rhel7cis_disable_service_checks is defined and rhel7cis_disable_service_checks
   tags:
       - level1
@@ -601,7 +599,7 @@
       enabled: no
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-    - (not rhel7cis_dovecot_server and dovecot_service_status.stdout == "loaded")
+    - rhel7cis_dovecot_server is defined and (not rhel7cis_dovecot_server and dovecot_service_status.stdout == "loaded")
     - rhel7cis_disable_service_checks is defined and rhel7cis_disable_service_checks
   tags:
       - level1
@@ -616,7 +614,7 @@
       enabled: no
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-    - (not rhel7cis_smb_server and smb_service_status.stdout == "loaded")
+    - rhel7cis_smb_server is defined and (not rhel7cis_smb_server and smb_service_status.stdout == "loaded")
     - rhel7cis_disable_service_checks is defined and rhel7cis_disable_service_checks
   tags:
       - level1
@@ -631,7 +629,7 @@
       enabled: no
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-    - (not rhel7cis_squid_server and squid_service_status.stdout == "loaded")
+    - rhel7cis_squid_server is defined and (not rhel7cis_squid_server and squid_service_status.stdout == "loaded")
     - rhel7cis_disable_service_checks is defined and rhel7cis_disable_service_checks
   tags:
       - level1
@@ -646,7 +644,7 @@
       enabled: no
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-    - (not rhel7cis_snmp_server and snmpd_service_status.stdout == "loaded")
+    - rhel7cis_snmp_server is defined and (not rhel7cis_snmp_server and snmpd_service_status.stdout == "loaded")
     - rhel7cis_disable_service_checks is defined and rhel7cis_disable_service_checks
   tags:
       - level1
@@ -662,7 +660,7 @@
   notify: systemctl restart postfix
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-    - (not rhel7cis_is_mail_server and postfix_installed.rc == 0)
+    - rhel7cis_is_mail_server is defined and (not rhel7cis_is_mail_server and postfix_installed.rc == 0)
     - rhel7cis_disable_service_checks is defined
   tags:
     - level1
@@ -676,7 +674,7 @@
       enabled: no
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-    - (not rhel7cis_nis_server and ypserv_service_status.stdout == "loaded")
+    - rhel7cis_nis_server is defined and (not rhel7cis_nis_server and ypserv_service_status.stdout == "loaded")
     - rhel7cis_disable_service_checks is defined and rhel7cis_disable_service_checks
   tags:
       - level1
@@ -691,7 +689,7 @@
       enabled: no
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-    - (not rhel7cis_rsh_server and rsh_service_status.stdout == "loaded")
+    - rhel7cis_rsh_server is defined and (not rhel7cis_rsh_server and rsh_service_status.stdout == "loaded")
     - rhel7cis_disable_service_checks is defined and rhel7cis_disable_service_checks
   tags:
       - level1
@@ -706,7 +704,7 @@
       enabled: no
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-    - (not rhel7cis_rsh_server and rlogin_service_status.stdout == "loaded")
+    - rhel7cis_rsh_server is defined and (not rhel7cis_rsh_server and rlogin_service_status.stdout == "loaded")
     - rhel7cis_disable_service_checks is defined and rhel7cis_disable_service_checks
   tags:
       - level1
@@ -721,7 +719,7 @@
       enabled: no
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-    - (not rhel7cis_rsh_server and rexec_service_status.stdout == "loaded")
+    - rhel7cis_rsh_server is defined and (not rhel7cis_rsh_server and rexec_service_status.stdout == "loaded")
     - rhel7cis_disable_service_checks is defined and rhel7cis_disable_service_checks
   tags:
       - level1
@@ -736,7 +734,7 @@
       enabled: no
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-    - (not rhel7cis_telnet_server and telnet_service_status.stdout == "loaded")
+    - rhel7cis_telnet_server is defined and (not rhel7cis_telnet_server and telnet_service_status.stdout == "loaded")
     - rhel7cis_disable_service_checks is defined and rhel7cis_disable_service_checks
   tags:
       - level1
@@ -751,7 +749,7 @@
       enabled: no
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-    - (not rhel7cis_tftp_server and tftp_service_status.stdout == "loaded")
+    - rhel7cis_tftp_server is defined and (not rhel7cis_tftp_server and tftp_service_status.stdout == "loaded")
     - rhel7cis_disable_service_checks is defined and rhel7cis_disable_service_checks
   tags:
       - level1
@@ -769,7 +767,7 @@
       enabled: no
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-    - (not rhel7cis_rsyncd_server and rsyncd_service_status.stdout == "loaded")
+    - rhel7cis_rsyncd_server is defined and (not rhel7cis_rsyncd_server and rsyncd_service_status.stdout == "loaded")
     - rhel7cis_disable_service_checks is defined and rhel7cis_disable_service_checks
   tags:
       - level1
@@ -784,7 +782,7 @@
       enabled: no
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-    - (not rhel7cis_ntalk_server and ntalk_service_status.stdout == "loaded")
+    - rhel7cis_ntalk_server is defined and (not rhel7cis_ntalk_server and ntalk_service_status.stdout == "loaded")
     - rhel7cis_disable_service_checks is defined and rhel7cis_disable_service_checks
   tags:
       - level1
@@ -794,71 +792,71 @@
 
 - name: "SCORED | 2.3.1 | PATCH | Ensure NIS Client is not installed"
   yum:
-      name: ypbind
-      state: absent
+    name: ypbind
+    state: absent
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-    - (not rhel7cis_ypbind_required)
+    - rhel7cis_ypbind_required is defined and (not rhel7cis_ypbind_required)
     - rhel7cis_disable_service_checks is defined and rhel7cis_disable_service_checks
   tags:
-      - level1
-      - patch
-      - rule_2.3.1
-      - disable_service_checks
+    - level1
+    - patch
+    - rule_2.3.1
+    - disable_service_checks
 
 - name: "SCORED | 2.3.2 | PATCH | Ensure rsh client is not installed"
   yum:
-      name: rsh
-      state: absent
+    name: rsh
+    state: absent
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-    - (not rhel7cis_rsh_required)
+    - rhel7cis_rsh_required is defined and (not rhel7cis_rsh_required)
     - rhel7cis_disable_service_checks is defined and rhel7cis_disable_service_checks
   tags:
-      - level1
-      - patch
-      - rule_2.3.2
-      - disable_service_checks
+    - level1
+    - patch
+    - rule_2.3.2
+    - disable_service_checks
 
 - name: "SCORED | 2.3.3 | PATCH | Ensure talk client is not installed"
   yum:
-      name: talk
-      state: absent
+    name: talk
+    state: absent
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-    - (not rhel7cis_talk_required)
+    - rhel7cis_talk_required is defined and (not rhel7cis_talk_required)
     - rhel7cis_disable_service_checks is defined and rhel7cis_disable_service_checks
   tags:
-      - level1
-      - patch
-      - rule_2.3.3
-      - disable_service_checks
+    - level1
+    - patch
+    - rule_2.3.3
+    - disable_service_checks
 
 - name: "SCORED | 2.3.4 | PATCH | Ensure telnet client is not installed"
   yum:
-      name: telnet
-      state: absent
+    name: telnet
+    state: absent
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-    - (not rhel7cis_telnet_required)
+    - rhel7cis_telnet_required is defined and (not rhel7cis_telnet_required)
     - rhel7cis_disable_service_checks is defined and rhel7cis_disable_service_checks
   tags:
-      - level1
-      - patch
-      - rule_2.3.4
-      - disable_service_checks
+    - level1
+    - patch
+    - rule_2.3.4
+    - disable_service_checks
 
 - name: "SCORED | 2.3.5 | PATCH | Ensure LDAP client is not installed"
   yum:
-      name: openldap-clients
-      state: absent
+    name: openldap-clients
+    state: absent
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
     - rhel7cis_ad_ldap_joined_machine is defined and not rhel7cis_ad_ldap_joined_machine
-    - (not rhel7cis_openldap_clients_required)
+    - rhel7cis_openldap_clients is defined and (not rhel7cis_openldap_clients_required)
     - rhel7cis_disable_service_checks is defined and rhel7cis_disable_service_checks
   tags:
-      - level1
-      - patch
-      - rule_2.3.5
-      - disable_service_checks
+    - level1
+    - patch
+    - rule_2.3.5
+    - disable_service_checks

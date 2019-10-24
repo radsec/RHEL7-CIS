@@ -407,7 +407,6 @@
       - patch
       - rule_4.2.1.5
 
-
 - name: "SCORED | 4.2.2.1 | PATCH | Ensure syslog-ng service is enabled"
   systemd:
     name: syslog-ng

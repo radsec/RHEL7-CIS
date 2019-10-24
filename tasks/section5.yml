@@ -237,6 +237,7 @@
     regexp: '^PermitRootLogin'
     line: 'PermitRootLogin no'
   when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
     - rhel7cis_permit_ssh_root_login_disabled is defined and rhel7cis_permit_ssh_root_login_disabled
   tags:
     - level1
@@ -348,7 +349,6 @@
     - patch
     - rule_5.2.12
 
-
 - name: "SCORED | 5.2.12 | PATCH | Ensure SSH Idle Timeout Interval is configured"
   lineinfile:
     state: present
@@ -376,7 +376,7 @@
     - patch
     - rule_5.2.12
 
-- name: "SCORED | 5.2.14 | PATCH | Ensure SSH LoginGraceTime is set to one minute or less"
+- name: "SCORED | 5.2.13 | PATCH | Ensure SSH LoginGraceTime is set to one minute or less"
   lineinfile:
     state: present
     dest: /etc/ssh/sshd_config
@@ -389,7 +389,7 @@
     - patch
     - rule_5.2.13
 
-- name: "SCORED | 5.2.15 | PATCH | Ensure SSH access is limited"
+- name: "SCORED | 5.2.14 | PATCH | Ensure SSH access is limited"
   command: /bin/true
   changed_when: no
   when:
@@ -1311,15 +1311,20 @@
     - rule_5.4.5
     - low
 
-- name: "NOTSCORED | 5.5 | PATCH | Ensure root login is restricted to system console"
-  command: /bin/true
-  changed_when: no
+- name: "SCORED | 5.6 | PATCH | Ensure access to the su command is restricted"
+  lineinfile:
+    state: present
+    dest: /etc/group
+    regexp: '^wheel:x:10:(.*)$'
+    line: 'wheel:x:10:\1,root'
+    backrefs: yes
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
   tags:
     - level1
     - patch
-    - rule_5.5
+    - rule_5.6
+    - low
 
 - name: "SCORED | 5.6 | PATCH | Ensure access to the su command is restricted"
   lineinfile:

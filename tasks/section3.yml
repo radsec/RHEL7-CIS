@@ -8,8 +8,7 @@
     sysctl_set: yes
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-    - rhel7cis_is_router is defined
-    - not rhel7cis_is_router
+    - rhel7cis_is_router is defined and not rhel7cis_is_router
   notify:
     - sysctl flush ipv4 route table
   tags:
@@ -32,8 +31,7 @@
     - { name: net.ipv4.conf.default.send_redirects, value: 0 }
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-    - rhel7cis_is_router is defined
-    - not rhel7cis_is_router
+    - rhel7cis_is_router is defined and not rhel7cis_is_router
   notify:
     - sysctl flush ipv4 route table
   tags:
@@ -395,8 +393,7 @@
     state: present
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-    - rhel7cis_firewall is defined
-    - rhel7cis_firewall == "firewalld"
+    - rhel7cis_firewall is defined and rhel7cis_firewall == "firewalld"
   tags:
     - level1
     - patch
@@ -405,12 +402,11 @@
 - name: "SCORED | 3.6 | PATCH | Ensure firewalld is installed and started | CUSTOM"
   service:
     name: firewalld
-    state: stopped
+    state: started
     enabled: no
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-    - rhel7cis_firewall is defined
-    - rhel7cis_firewall == "firewalld"
+    - rhel7cis_firewall is defined and rhel7cis_firewall == "firewalld"
   tags:
     - level1
     - patch
@@ -422,8 +418,7 @@
     state: present
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-    - rhel7cis_firewall is defined
-    - rhel7cis_firewall == "iptables"
+    - rhel7cis_firewall is defined and rhel7cis_firewall == "iptables"
   tags:
     - level1
     - patch
@@ -438,8 +433,7 @@
     state: present
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-    - rhel7cis_firewall is defined
-    - rhel7cis_firewall == "iptables"
+    - rhel7cis_firewall is defined and rhel7cis_firewall == "iptables"
     - rhel7cis_firewall_default_deny_rule is defined and rhel7cis_firewall_default_deny_rule
   tags:
     - level1
@@ -456,8 +450,7 @@
     state: present
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-    - rhel7cis_firewall is defined
-    - rhel7cis_firewall == "iptables"
+    - rhel7cis_firewall is defined and rhel7cis_firewall == "iptables"
     - rhel7cis_firewall_default_deny_rule is defined and rhel7cis_firewall_default_deny_rule
   tags:
     - level1
@@ -474,8 +467,7 @@
     state: present
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-    - rhel7cis_firewall is defined
-    - rhel7cis_firewall == "iptables"
+    - rhel7cis_firewall is defined and rhel7cis_firewall == "iptables"
     - rhel7cis_firewall_default_deny_rule is defined and rhel7cis_firewall_default_deny_rule
   tags:
     - level1
@@ -493,8 +485,7 @@
     state: present
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-    - rhel7cis_firewall is defined
-    - rhel7cis_firewall == "iptables"
+    - rhel7cis_firewall is defined and rhel7cis_firewall == "iptables"
     - rhel7cis_firewall_loopback_rule is defined and rhel7cis_firewall_loopback_rule
   tags:
     - level1
@@ -512,8 +503,7 @@
     state: present
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-    - rhel7cis_firewall is defined
-    - rhel7cis_firewall == "iptables"
+    - rhel7cis_firewall is defined and rhel7cis_firewall == "iptables"
     - rhel7cis_firewall_loopback_rule is defined and rhel7cis_firewall_loopback_rule
   tags:
     - level1
@@ -531,8 +521,7 @@
     state: present
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-    - rhel7cis_firewall is defined
-    - rhel7cis_firewall == "iptables"
+    - rhel7cis_firewall is defined and rhel7cis_firewall == "iptables"
     - rhel7cis_firewall_loopback_rule is defined and rhel7cis_firewall_loopback_rule
   tags:
     - level1
@@ -550,8 +539,7 @@
     jump: ACCEPT
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-    - rhel7cis_firewall is defined
-    - rhel7cis_firewall == "iptables"
+    - rhel7cis_firewall is defined and rhel7cis_firewall == "iptables"
     - rhel7cis_firewall_outbound_rule is defined and rhel7cis_firewall_outbound_rule
   tags:
     - level1
@@ -569,8 +557,7 @@
     jump: ACCEPT
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-    - rhel7cis_firewall is defined
-    - rhel7cis_firewall == "iptables"
+    - rhel7cis_firewall is defined and rhel7cis_firewall == "iptables"
     - rhel7cis_firewall_outbound_rule is defined and rhel7cis_firewall_outbound_rule
   tags:
     - level1
@@ -588,8 +575,7 @@
     jump: ACCEPT
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-    - rhel7cis_firewall is defined
-    - rhel7cis_firewall == "iptables"
+    - rhel7cis_firewall is defined and rhel7cis_firewall == "iptables"
     - rhel7cis_firewall_outbound_rule is defined and rhel7cis_firewall_outbound_rule
   tags:
     - level1
@@ -607,8 +593,7 @@
     jump: ACCEPT
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-    - rhel7cis_firewall is defined
-    - rhel7cis_firewall == "iptables"
+    - rhel7cis_firewall is defined and rhel7cis_firewall == "iptables"
     - rhel7cis_firewall_outbound_rule is defined and rhel7cis_firewall_outbound_rule
   tags:
     - level1
@@ -626,8 +611,7 @@
     jump: ACCEPT
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-    - rhel7cis_firewall is defined
-    - rhel7cis_firewall == "iptables"
+    - rhel7cis_firewall is defined and rhel7cis_firewall == "iptables"
     - rhel7cis_firewall_outbound_rule is defined and rhel7cis_firewall_outbound_rule
   tags:
     - level1
@@ -645,8 +629,7 @@
     jump: ACCEPT
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-    - rhel7cis_firewall is defined
-    - rhel7cis_firewall == "iptables"
+    - rhel7cis_firewall is defined and rhel7cis_firewall == "iptables"
     - rhel7cis_firewall_outbound_rule is defined and rhel7cis_firewall_outbound_rule
   tags:
     - level1
@@ -659,8 +642,7 @@
     msg: "Ensure firewall rules exist for all open ports"
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-    - rhel7cis_firewall is defined
-    - rhel7cis_firewall == "iptables"
+    - rhel7cis_firewall is defined and rhel7cis_firewall == "iptables"
   tags:
     - level1
     - patch
