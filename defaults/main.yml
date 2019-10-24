@@ -234,3 +234,15 @@ rhel7cis_default_user_umask: 027
 
 # Section 6.2.8 | Ensure users' home directory permissions are 750 or more restrictive
 rhel7cis_modify_user_homes: true
+
+# Section 6.2.11 | Ensure no users have .forward files
+rhel7cis_modify_dot_forward_files: false
+
+# Section 6.2.12 | Ensure no users have .netrc files
+rhel7cis_modify_dot_netrc_files: false
+
+# Section 6.2.13 | Ensure users' .netrc files are not group or world accessible
+rhel7cis_modify_dot_netrc_files_group: false
+
+# Section 6.2.14 | Ensure no users have .rhosts files
+rhel7cis_modify_dot_rhosts_files: false

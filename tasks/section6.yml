@@ -387,8 +387,7 @@
   changed_when: no
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-    - rhel7cis_modify_user_homes is defined
-    - rhel7cis_modify_user_homes
+    - rhel7cis_modify_user_homes is defined and rhel7cis_modify_user_homes
   tags:
     - rule_6.2.8
     - level1
@@ -402,8 +401,7 @@
   register: home_directories_permissions
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-    - rhel7cis_modify_user_homes is defined
-    - rhel7cis_modify_user_homes
+    - rhel7cis_modify_user_homes is defined and rhel7cis_modify_user_homes
   tags:
     - rule_6.2.8
     - level1
@@ -428,9 +426,8 @@
     msg: "PASS | 6.2.8 | Users' home directories permissions are 750 or more restrictive."
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-    - rhel7cis_modify_user_homes is defined and home_directories_permissions is defined
-    - home_directories_permissions.stdout == ""
-    - rhel7cis_modify_user_homes
+    - rhel7cis_modify_user_homes is defined and rhel7cis_modify_user_homes
+    - home_directories_permissions is defined and home_directories_permissions.stdout == ""
   tags:
     - rule_6.2.8
     - level1
@@ -446,8 +443,7 @@
   changed_when: no
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-    - rhel7cis_modify_user_homes is defined
-    - rhel7cis_modify_user_homes
+    - rhel7cis_modify_user_homes is defined and rhel7cis_modify_user_homes
   tags:
     - rule_6.2.8
     - level1
@@ -567,8 +563,7 @@
     msg: "PASS | 6.2.10 | Users' dot files are not group or world writable."
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-    - user_dot_files is defined
-    - user_dot_files.stdout == ""
+    - user_dot_files is defined and user_dot_files.stdout == ""
   tags:
     - rule_6.2.10
     - level1
@@ -598,6 +593,7 @@
   no_log: yes
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
+    - rhel7cis_modify_dot_forward_files is defined and rhel7cis_modify_dot_forward_files
   tags:
     - rule_6.2.11
     - patch
@@ -612,6 +608,7 @@
   no_log: yes
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
+    - rhel7cis_modify_dot_netrc_files is defined and rhel7cis_modify_dot_netrc_files
   tags:
     - rule_6.2.12
     - patch
@@ -628,6 +625,7 @@
   changed_when: no
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
+    - rhel7cis_modify_dot_netrc_files_group is defined and rhel7cis_modify_dot_netrc_files_group
   tags:
     - rule_6.2.13
     - patch
@@ -642,6 +640,7 @@
   no_log: yes
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
+    - rhel7cis_modify_dot_netrc_files_group is defined and rhel7cis_modify_dot_netrc_files_group
   tags:
     - rule_6.2.13
     - patch
@@ -664,8 +663,8 @@
     msg: "PASS | 6.2.13 | Users' .netrc files are not group or world accessible."
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-    - dot_netrc_files is defined
-    - dot_netrc_files.stdout == ""
+    - rhel7cis_modify_dot_netrc_files_group is defined and rhel7cis_modify_dot_netrc_files_group
+    - dot_netrc_files is defined and dot_netrc_files.stdout == ""
   tags:
     - rule_6.2.13
     - patch
@@ -681,6 +680,7 @@
   changed_when: no
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
+    - rhel7cis_modify_dot_netrc_files_group is defined and rhel7cis_modify_dot_netrc_files_group
   tags:
     - rule_6.2.13
     - patch
@@ -695,6 +695,7 @@
   no_log: yes
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
+    - rhel7cis_modify_dot_rhosts_files is defined and rhel7cis_modify_dot_rhosts_files
   tags:
     - rule_6.2.14
     - patch
@@ -815,8 +816,7 @@
     msg: "PASS | 6.2.16 | No duplicate UIDs exist."
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-    - duplicate_uids is defined
-    - duplicate_uids.stdout == ""
+    - duplicate_uids is defined and duplicate_uids.stdout == ""
   tags:
     - rule_6.2.16
     - patch
@@ -884,8 +884,7 @@
     msg: "PASS | 6.2.17 | No duplicate GIDs exist."
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-    - duplicate_gids is defined
-    - duplicate_gids.stdout == ""
+    - duplicate_gids is defined and duplicate_gids.stdout == ""
   tags:
     - rule_6.2.17
     - patch
@@ -953,8 +952,7 @@
     msg: "PASS | 6.2.18 | No duplicate user names exist"
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-    - duplicate_users is defined
-    - duplicate_users.stdout == ""
+    - duplicate_users is defined and duplicate_users.stdout == ""
   tags:
     - rule_6.2.18
     - patch
@@ -1022,8 +1020,7 @@
     msg: "PASS | 6.2.19 | No duplicate group names exist"
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
-    - duplicate_groups is defined
-    - duplicate_groups.stdout == ""
+    - duplicate_groups is defined and duplicate_groups.stdout == ""
   tags:
     - rule_6.2.19
     - patch
