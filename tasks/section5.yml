@@ -138,6 +138,21 @@
     - patch
     - rule_5.1.8
 
+- name: "SCORED | 5.1.8 | PATCH | Ensure at/cron is restricted to authorized users"
+  template:
+    src: etc/cron.allow.j2
+    dest: /etc/cron.allow
+    owner: root
+    group: root
+    mode: 0600
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
+    - rhel7cis_cron_allow_apply_template is defined and rhel7cis_cron_allow_apply_template
+  tags:
+    - level1
+    - patch
+    - rule_5.1.8
+
 - name: "SCORED | 5.2.1 | PATCH | Ensure permissions on /etc/ssh/sshd_config are configured"
   file:
     dest: /etc/ssh/sshd_config
@@ -504,42 +519,21 @@
     - rule_5.3.2
     - low
 
-
 # END # auth required pam_faillock.so preauth audit silent deny=5 unlock_time=900 #
 
 # START # auth [success=1 default=bad] pam_unix.so #
 
-- name: 'SCORED | 5.3.2 | Ensure lockout for failed password attempts is configured - pam_unix.so'
+- name: "SCORED | 5.3.2 | Ensure lockout for failed password attempts is configured - pam_unix.so"
   pamd:
-    name: '{{ item }}'
+    name: "{{ item }}"
     type: auth
-    control: sufficient
-    module_path: 'pam_unix.so'
-    new_control: '[success=1 default=bad]'
-  ignore_errors: yes
-  loop:
-    - system-auth
-    - password-auth
-
-  when:
-    - rhel7cis_level1 is defined and rhel7cis_level1
-  tags:
-    - level1
-    - patch
-    - rule_5.3.2
-    - low
-
-- name: 'SCORED | 5.3.2 | Ensure lockout for failed password attempts is configured - pam_unix.so'
-  pamd:
-    name: '{{ item }}'
-    type: auth
-    control: sufficient
-    module_path: 'pam_unix.so'
+    control: "[success=1 default=bad]"
+    module_path: pam_unix.so
     new_type: auth
-    new_control: '[success=1 default=bad]'
+    new_control: sufficient
     new_module_path: pam_unix.so
-    module_arguments: 'nullok try_first_pass'
-    state: before
+    module_arguments: nullok try_first_pass
+    state: updated
   ignore_errors: yes
   loop:
     - system-auth
@@ -556,7 +550,48 @@
   pamd:
     name: '{{ item }}'
     type: auth
-    control: '[success=1 default=bad]'
+    control: 'sufficient'
+    module_path: pam_unix.so
+#    new_control: 'sufficient'
+    module_arguments: 'nullok try_first_pass'
+    state: updated
+  ignore_errors: yes
+  loop:
+    - system-auth
+    - password-auth
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
+  tags:
+    - level1
+    - patch
+    - rule_5.3.2
+    - low
+
+- name: 'SCORED | 5.3.2 | Ensure lockout for failed password attempts is configured - pam_unix.so'
+  pamd:
+    name: '{{ item }}'
+    type: auth
+    control: sufficient
+    module_path: 'pam_unix.so'
+    new_control: 'sufficient'
+  ignore_errors: yes
+  loop:
+    - system-auth
+    - password-auth
+
+  when:
+    - rhel7cis_level1 is defined and rhel7cis_level1
+  tags:
+    - level1
+    - patch
+    - rule_5.3.2
+    - low
+
+- name: 'SCORED | 5.3.2 | Ensure lockout for failed password attempts is configured - pam_unix.so'
+  pamd:
+    name: '{{ item }}'
+    type: auth
+    control: 'sufficient'
     module_path: pam_unix.so
     module_arguments: 'nullok try_first_pass'
     state: updated
@@ -576,7 +611,7 @@
   pamd:
     name: '{{ item }}'
     type: auth
-    control: '[success=1 default=bad]'
+    control: 'sufficient'
     module_path: pam_unix.so
     module_arguments: 'nullok try_first_pass'
     state: args_present
@@ -619,7 +654,7 @@
   pamd:
     name: '{{ item }}'
     type: auth
-    control: '[success=1 default=bad]'
+    control: 'sufficient'
     module_path: pam_unix.so
     new_type: auth
     new_control: '[default=die]'

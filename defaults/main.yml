@@ -18,6 +18,20 @@ rhel7cis_level2: false
 ### Section 1 Parameters ###
 ############################
 
+# Section Partition #
+
+# Section 1.1.3 - 1.1.5 | Ensure nodev, nosuid, noexec on /tmp
+rhel7cis_tmp_ensure_all: false
+rhel7cis_tmp_ensure_nodev: false
+rhel7cis_tmp_ensure_nosuid: false
+rhel7cis_tmp_ensure_noexec: false
+
+# Section 1.1.8 - 1.1.10 | Ensure nodev, nosuid, noexec on /var/tmp
+rhel7cis_var_tmp_ensure_all: true
+rhel7cis_var_tmp_ensure_nodev: false
+rhel7cis_var_tmp_ensure_nosuid: false
+rhel7cis_var_tmp_ensure_noexec: false
+
 # Section AIDE #
 
 # Section 1.3.1 | Ensure AIDE is installed and configured
@@ -207,6 +221,9 @@ rhel7cis_syslog_ng_loghost_address: INSERT_DNS_NAME_HERE
 ############################
 ### Section 5 Parameters ###
 ############################
+
+# Section 5.1.8 | Ensure at/cron is restricted to authorized users
+rhel7cis_cron_allow_apply_template: false
 
 # Section 5.2.9 | Ensure SSH root login is disabled
 rhel7cis_permit_ssh_root_login_disabled: true
