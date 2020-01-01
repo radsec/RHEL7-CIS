@@ -1,0 +1,42 @@
+---
+- hosts:  all
+  become: yes
+  become_method: sudo
+  gather_facts: false
+  ignore_errors: true
+  ignore_unreachable: true
+  vars:
+    ignore_errors: true
+    ignore_unreachable: true
+  tasks:
+  - name: "Check if the host is reachable"
+    setup:
+    register: setup_status
+    ignore_errors: yes
+    tags:
+      - always
+
+  - name: "Group reachable hosts"
+    group_by: key=reachable
+    ignore_errors: yes
+    when:
+      - setup_status is defined and not setup_status.unreachable is defined
+    tags:
+      - always
+
+- hosts: reachable
+  become: yes
+  become_method: sudo
+  gather_facts: true
+  ignore_errors: false
+  ignore_unreachable: true
+  vars:
+    ignore_errors: false
+    ignore_unreachable: true
+    rhel7cis_level1: true
+    rhel7cis_level2: true
+  roles:
+    - role: RHEL7-CIS
+  post_tasks:
+    - meta: clear_host_errors
+      when: ignore_unreachable
