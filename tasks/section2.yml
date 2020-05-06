@@ -240,7 +240,7 @@
     - level1
     - scored
     - patch
-    - rhel7cis_disable_service_checks is defined and rhel7cis_disable_service_checks 
+    - rhel7cis_disable_service_checks is defined and rhel7cis_disable_service_checks
     - rule_2.1.6
 
 - name: "SCORED | 2.1.6 | PATCH | Ensure tftp server is not enabled"
@@ -253,7 +253,7 @@
   tags:
     - level1
     - scored
-    - patch 
+    - patch
     - rule_2.1.6
 
 - name: "SCORED | 2.1.7 | PATCH | Ensure xinetd is not enabled"
@@ -369,12 +369,12 @@
       - rule_2.2.1.2
 
 - name: "SCORED | 2.2.1.3 | PATCH | Ensure chrony is configured"
-  template:
-    src: chrony.conf.j2
-    dest: /etc/chrony.conf
-    owner: root
-    group: root
-    mode: 0644
+  lineinfile:
+    path: /etc/chrony.conf
+    regexp: "^server\\s+{{ item }}(.*)$"
+    line: "server {{ item }}\\1"
+    backrefs: yes
+  loop: "{{ rhel7cis_time_synchronization_servers }}"
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
     - rhel7cis_time_synchronization is defined
@@ -463,7 +463,7 @@
   when:
     - rhel7cis_level1 is defined and rhel7cis_level1
     - rhel7cis_cups_server is defined and (not rhel7cis_cups_server and cups_service_status.stdout == "loaded")
-    - rhel7cis_disable_service_checks is defined and rhel7cis_disable_service_checks  
+    - rhel7cis_disable_service_checks is defined and rhel7cis_disable_service_checks
   tags:
       - level1
       - scored
